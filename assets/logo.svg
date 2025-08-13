@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="128" height="128" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Overwatch AI Logo</title>
+  <desc id="desc">An abstract eye with a circuit at the center, in purple gradient, symbolizing vigilant AI monitoring.</desc>
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="128" y2="128" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#A78BFA"/>
+      <stop offset="50%" stop-color="#8B5CF6"/>
+      <stop offset="100%" stop-color="#7C3AED"/>
+    </linearGradient>
+    <filter id="soft" x="-20%" y="-20%" width="140%" height="140%" color-interpolation-filters="sRGB">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="1.2" result="blur"/>
+    </filter>
+  </defs>
+
+  <!-- Outer eye shape -->
+  <path d="M10 64c14-22 38-36 54-36s40 14 54 36c-14 22-38 36-54 36S24 86 10 64Z" fill="url(#g)"/>
+
+  <!-- Inner eye / pupil ring -->
+  <circle cx="64" cy="64" r="22" fill="#1F1437" opacity="0.25"/>
+  <circle cx="64" cy="64" r="16" fill="#1F1437" opacity="0.45"/>
+
+  <!-- Central circuit node -->
+  <circle cx="64" cy="64" r="8" fill="#FFFFFF"/>
+  <circle cx="64" cy="64" r="8" fill="#FFFFFF" filter="url(#soft)" opacity="0.35"/>
+
+  <!-- Circuit lines -->
+  <path d="M64 40v8M64 80v8M40 64h8M80 64h8" stroke="#F5F3FF" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="64" cy="48" r="3" fill="#EDE9FE"/>
+  <circle cx="64" cy="88" r="3" fill="#EDE9FE"/>
+  <circle cx="48" cy="64" r="3" fill="#EDE9FE"/>
+  <circle cx="88" cy="64" r="3" fill="#EDE9FE"/>
+
+  <!-- Subtle highlight -->
+  <path d="M22 64c10-15 28-26 42-26 14 0 32 11 42 26" stroke="#FFFFFF" stroke-opacity="0.12" stroke-width="6" stroke-linecap="round"/>
+</svg>
