@@ -6,7 +6,6 @@ async function getApiKey() {
   return togetherApiKey || null;
 }
 
-// On first install, guide user to set API key
 browser.runtime.onInstalled.addListener((details) => {
   if (details.reason === "install") {
     browser.storage.local.get("togetherApiKey").then(({ togetherApiKey }) => {

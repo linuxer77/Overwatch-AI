@@ -36,7 +36,8 @@ document.addEventListener("DOMContentLoaded", async () => {
         showMain();
         if (workPrompt) {
           promptInput.value = workPrompt;
-          status.textContent = "Prompt loaded. Monitoring will resume when started.";
+          status.textContent =
+            "Prompt loaded. Monitoring will resume when started.";
         }
       } else {
         showSetup();
@@ -87,7 +88,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     try {
-      const { togetherApiKey } = await browser.storage.local.get("togetherApiKey");
+      const { togetherApiKey } = await browser.storage.local.get(
+        "togetherApiKey"
+      );
       if (!togetherApiKey) {
         status.textContent = "Please set your Together API key first.";
         status.className = "status error";
@@ -106,7 +109,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   });
 
-  // Allow pressing Enter in prompt to start
   promptInput?.addEventListener("keydown", (e) => {
     if (e.key === "Enter") {
       startBtn.click();
