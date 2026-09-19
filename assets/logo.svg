@@ -1,36 +1,56 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg width="128" height="128" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
-  <title id="title">Overwatch AI Logo</title>
-  <desc id="desc">An abstract eye with a circuit at the center, in purple gradient, symbolizing vigilant AI monitoring.</desc>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
   <defs>
-    <linearGradient id="g" x1="0" y1="0" x2="128" y2="128" gradientUnits="userSpaceOnUse">
-      <stop offset="0%" stop-color="#A78BFA"/>
-      <stop offset="50%" stop-color="#8B5CF6"/>
-      <stop offset="100%" stop-color="#7C3AED"/>
+    <radialGradient id="purpleGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#c084fc" stop-opacity="0.9"/>
+      <stop offset="40%" stop-color="#9333ea" stop-opacity="0.75"/>
+      <stop offset="75%" stop-color="#6b21a8" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#07050d" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="bladeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f5d0fe"/>
+      <stop offset="50%" stop-color="#c084fc"/>
+      <stop offset="100%" stop-color="#7e22ce"/>
     </linearGradient>
-    <filter id="soft" x="-20%" y="-20%" width="140%" height="140%" color-interpolation-filters="sRGB">
-      <feGaussianBlur in="SourceGraphic" stdDeviation="1.2" result="blur"/>
+    <filter id="inkGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
     </filter>
   </defs>
 
-  <!-- Outer eye shape -->
-  <path d="M10 64c14-22 38-36 54-36s40 14 54 36c-14 22-38 36-54 36S24 86 10 64Z" fill="url(#g)"/>
+  <!-- Deep ink background -->
+  <rect width="128" height="128" rx="20" fill="#090614"/>
 
-  <!-- Inner eye / pupil ring -->
-  <circle cx="64" cy="64" r="22" fill="#1F1437" opacity="0.25"/>
-  <circle cx="64" cy="64" r="16" fill="#1F1437" opacity="0.45"/>
+  <!-- Glowing ink sun circle -->
+  <circle cx="64" cy="64" r="54" fill="url(#purpleGlow)"/>
 
-  <!-- Central circuit node -->
-  <circle cx="64" cy="64" r="8" fill="#FFFFFF"/>
-  <circle cx="64" cy="64" r="8" fill="#FFFFFF" filter="url(#soft)" opacity="0.35"/>
+  <!-- Ink splatter droplets -->
+  <circle cx="22" cy="30" r="3.5" fill="#a855f7" opacity="0.8"/>
+  <circle cx="28" cy="22" r="2" fill="#c084fc" opacity="0.6"/>
+  <circle cx="106" cy="28" r="3" fill="#9333ea" opacity="0.7"/>
+  <circle cx="112" cy="38" r="1.5" fill="#a855f7" opacity="0.6"/>
+  <circle cx="18" cy="92" r="2.5" fill="#7e22ce" opacity="0.7"/>
+  <circle cx="104" cy="98" r="3.5" fill="#a855f7" opacity="0.8"/>
+  <circle cx="114" cy="88" r="2" fill="#c084fc" opacity="0.5"/>
+  <path d="M64 8 L66 18 L62 18 Z" fill="#9333ea" opacity="0.7"/>
+  <path d="M64 120 L66 110 L62 110 Z" fill="#9333ea" opacity="0.7"/>
 
-  <!-- Circuit lines -->
-  <path d="M64 40v8M64 80v8M40 64h8M80 64h8" stroke="#F5F3FF" stroke-width="3" stroke-linecap="round"/>
-  <circle cx="64" cy="48" r="3" fill="#EDE9FE"/>
-  <circle cx="64" cy="88" r="3" fill="#EDE9FE"/>
-  <circle cx="48" cy="64" r="3" fill="#EDE9FE"/>
-  <circle cx="88" cy="64" r="3" fill="#EDE9FE"/>
+  <!-- Dynamic Ink-Brush Sun / Enso ring -->
+  <circle cx="64" cy="64" r="44" stroke="#a855f7" stroke-width="4.5" stroke-dasharray="210 30 20 15" stroke-linecap="round" fill="none" opacity="0.85" filter="url(#inkGlow)"/>
 
-  <!-- Subtle highlight -->
-  <path d="M22 64c10-15 28-26 42-26 14 0 32 11 42 26" stroke="#FFFFFF" stroke-opacity="0.12" stroke-width="6" stroke-linecap="round"/>
+  <!-- Sharp Katana Slash through center -->
+  <path d="M16 112 L112 16" stroke="url(#bladeGrad)" stroke-width="3" stroke-linecap="square" filter="url(#inkGlow)"/>
+
+  <!-- Slit Eye / Focus Pupil -->
+  <path d="M36 64 Q64 42 92 64 Q64 86 36 64 Z" fill="#130926" stroke="#c084fc" stroke-width="2.5"/>
+  <circle cx="64" cy="64" r="8" fill="#f5d0fe" filter="url(#inkGlow)"/>
+  <line x1="64" y1="46" x2="64" y2="82" stroke="#4c1d95" stroke-width="3" stroke-linecap="round"/>
+
+  <!-- Corner crosshairs / Manga panel markers -->
+  <path d="M12 18 L18 18 M12 18 L12 24" stroke="#a855f7" stroke-width="2" opacity="0.5"/>
+  <path d="M116 18 L110 18 M116 18 L116 24" stroke="#a855f7" stroke-width="2" opacity="0.5"/>
+  <path d="M12 110 L18 110 M12 110 L12 104" stroke="#a855f7" stroke-width="2" opacity="0.5"/>
+  <path d="M116 110 L110 110 M116 110 L116 104" stroke="#a855f7" stroke-width="2" opacity="0.5"/>
 </svg>

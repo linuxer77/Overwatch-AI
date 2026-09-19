@@ -1,5 +1,5 @@
 /**
- * Overwatch AI - Popup Controller (Firefox MV3)
+ * Overwatch AI - Popup Controller (Anime / Manga Ink Theme)
  */
 
 const api = typeof browser !== "undefined" ? browser : chrome;
@@ -32,8 +32,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   function showSetup() {
     setupView.style.display = "block";
     mainView.style.display = "none";
-    statusBadge.className = "badge paused";
-    statusBadge.innerHTML = "<span>⚙️ Setup Needed</span>";
+    statusBadge.className = "status-pill paused";
+    statusBadge.innerHTML = '<span class="indicator"></span><span>未設定 SETUP</span>';
     apiKeyInput.focus();
   }
 
@@ -45,11 +45,11 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   function updateStatusBadge(isActive) {
     if (isActive) {
-      statusBadge.className = "badge active";
-      statusBadge.innerHTML = "<span>🟢 Monitoring</span>";
+      statusBadge.className = "status-pill active";
+      statusBadge.innerHTML = '<span class="indicator"></span><span>監視中 ACTIVE</span>';
     } else {
-      statusBadge.className = "badge paused";
-      statusBadge.innerHTML = "<span>⏸️ Paused</span>";
+      statusBadge.className = "status-pill paused";
+      statusBadge.innerHTML = '<span class="indicator"></span><span>休止 PAUSED</span>';
     }
   }
 
@@ -66,7 +66,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   function renderDomainTags(domains = []) {
     allowedTags.innerHTML = "";
     if (domains.length === 0) {
-      allowedTags.innerHTML = '<span style="font-size: 11px; color: var(--muted); font-style: italic;">No custom domains added yet.</span>';
+      allowedTags.innerHTML = '<span style="font-size: 11px; font-family: monospace; color: var(--text-dark); font-style: italic;">// NO CUSTOM SANCTUARY DOMAINS</span>';
       return;
     }
 
@@ -85,7 +85,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   function renderGraveyard(items = []) {
     graveyardList.innerHTML = "";
     if (items.length === 0) {
-      graveyardList.innerHTML = '<div class="empty-state">No distractions closed yet. Keep focused! 🚀</div>';
+      graveyardList.innerHTML = '<div class="empty-state">// NO DISTRACTIONS SLAIN YET. DISCIPLINE MAINTAINED.</div>';
       return;
     }
 
@@ -101,7 +101,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             <span>${formatTimeAgo(item.closedAt)}</span>
           </div>
         </div>
-        <button class="btn-secondary btn-sm restore-btn" data-url="${item.url}" title="Reopen this tab">↺ Restore</button>
+        <button class="btn btn-secondary btn-sm restore-btn" data-url="${item.url}" title="Reopen this tab">↺ RESTORE</button>
       `;
       graveyardList.appendChild(row);
     });
@@ -110,6 +110,11 @@ document.addEventListener("DOMContentLoaded", async () => {
   // Load initial settings
   async function loadState() {
     try {
+      if (!api?.storage?.local) {
+        showSetup();
+        return;
+      }
+
       const {
         typesafeApiKey,
         workPrompt,
@@ -147,17 +152,16 @@ document.addEventListener("DOMContentLoaded", async () => {
     const key = apiKeyInput.value.trim();
     if (!key) {
       setupStatus.className = "status-msg error";
-      setupStatus.textContent = "API key cannot be empty.";
+      setupStatus.textContent = "[!] API key cannot be empty.";
       return;
     }
 
     saveKeyBtn.disabled = true;
-    saveKeyBtn.textContent = "Validating with Jev...";
+    saveKeyBtn.textContent = "COMMUNING WITH JEV...";
     setupStatus.className = "status-msg";
     setupStatus.textContent = "";
 
     try {
-      // Test key via background runtime message
       const response = await api.runtime.sendMessage({
         action: "TEST_API_KEY",
         apiKey: key
@@ -166,20 +170,20 @@ document.addEventListener("DOMContentLoaded", async () => {
       if (response && response.success) {
         await api.storage.local.set({ typesafeApiKey: key });
         setupStatus.className = "status-msg ok";
-        setupStatus.textContent = "TypeSafe API key verified successfully!";
+        setupStatus.textContent = "✓ JEV CORE CONNECTED & AUTHENTICATED.";
         setTimeout(() => {
           showMain(monitoringToggle.checked);
         }, 600);
       } else {
         setupStatus.className = "status-msg error";
-        setupStatus.textContent = response?.error || "Invalid TypeSafe API Key. Please check console.typesafe.ai.";
+        setupStatus.textContent = `[!] ${response?.error || "Invalid TypeSafe key. Check console.typesafe.ai."}`;
       }
     } catch (err) {
       setupStatus.className = "status-msg error";
-      setupStatus.textContent = "Failed to communicate with background engine.";
+      setupStatus.textContent = "[!] Engine communication error.";
     } finally {
       saveKeyBtn.disabled = false;
-      saveKeyBtn.textContent = "Save & Validate Key";
+      saveKeyBtn.textContent = "AUTHENTICATE KEY";
     }
   });
 
@@ -204,21 +208,21 @@ document.addEventListener("DOMContentLoaded", async () => {
     const prompt = workPromptInput.value.trim();
     if (!prompt) {
       goalStatus.className = "status-msg error";
-      goalStatus.textContent = "Focus goal cannot be empty.";
+      goalStatus.textContent = "[!] Focus mission cannot be empty.";
       return;
     }
 
     try {
       await api.storage.local.set({ workPrompt: prompt });
       goalStatus.className = "status-msg ok";
-      goalStatus.textContent = "Goal updated! Evaluating open tabs...";
+      goalStatus.textContent = "✓ MISSION UPDATED // JEV PATROLLING ACTIVE TABS";
       api.runtime.sendMessage({ action: "TRIGGER_EVALUATION" }).catch(() => {});
       setTimeout(() => {
         goalStatus.style.display = "none";
-      }, 3000);
+      }, 3500);
     } catch (err) {
       goalStatus.className = "status-msg error";
-      goalStatus.textContent = "Failed to save goal.";
+      goalStatus.textContent = "[!] Failed to update mission.";
     }
   });
 
@@ -232,7 +236,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     let raw = newDomainInput.value.trim().toLowerCase();
     if (!raw) return;
 
-    // Strip protocols if entered
     raw = raw.replace(/^https?:\/\//, "").replace(/\/.*$/, "").trim();
     if (!raw) return;
 

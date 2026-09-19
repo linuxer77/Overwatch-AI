@@ -175,53 +175,57 @@ async function injectWarningBanner(tabId, workGoal, graceSeconds = 5) {
           top: 20px !important;
           right: 20px !important;
           z-index: 2147483647 !important;
-          background: #0f172a !important;
-          color: #f8fafc !important;
-          border: 1px solid rgba(239, 68, 68, 0.5) !important;
-          border-radius: 12px !important;
+          background: #090614 !important;
+          color: #fdfbf7 !important;
+          border: 1.5px solid rgba(168, 85, 247, 0.6) !important;
           padding: 16px 20px !important;
           font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
-          box-shadow: 0 10px 30px rgba(0,0,0,0.6), 0 0 15px rgba(239, 68, 68, 0.25) !important;
-          max-width: 360px !important;
+          box-shadow: 0 10px 35px rgba(0,0,0,0.8), 0 0 20px rgba(168, 85, 247, 0.35) !important;
+          max-width: 380px !important;
           line-height: 1.45 !important;
+          clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px)) !important;
           transition: all 0.3s ease !important;
         `;
 
         let remaining = seconds;
         banner.innerHTML = `
-          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; border-bottom: 1px solid rgba(168, 85, 247, 0.3); padding-bottom: 6px;">
             <div style="display: flex; align-items: center; gap: 8px;">
-              <span style="width: 10px; height: 10px; border-radius: 50%; background: #ef4444; display: inline-block;"></span>
-              <strong style="font-size: 13px; color: #f87171; letter-spacing: 0.5px; text-transform: uppercase;">Overwatch AI Distraction</strong>
+              <span style="font-size: 13px; color: #c084fc; font-weight: 900;">斬</span>
+              <strong style="font-size: 12px; color: #fdfbf7; letter-spacing: 1px; text-transform: uppercase; font-family: monospace;">OVERWATCH // FOCUS BREACH</strong>
             </div>
-            <span id="overwatch-countdown" style="font-weight: 700; color: #ef4444; font-size: 14px;">${remaining}s</span>
+            <span id="overwatch-countdown" style="font-weight: 900; color: #c084fc; font-size: 14px; font-family: monospace; text-shadow: 0 0 8px #a855f7;">${remaining}s</span>
           </div>
-          <p style="margin: 0 0 8px 0; font-size: 12.5px; color: #cbd5e1;">
-            This page appears off-topic from your focus:
+          <p style="margin: 0 0 6px 0; font-size: 12px; color: #998eb0;">
+            Target tab is off-topic from your active mission:
           </p>
-          <div style="background: rgba(255,255,255,0.05); padding: 6px 10px; border-radius: 6px; font-size: 12px; color: #a78bfa; margin-bottom: 12px; font-weight: 500; word-break: break-word;">
+          <div style="background: rgba(168, 85, 247, 0.1); border-left: 2px solid #a855f7; padding: 6px 10px; font-size: 11.5px; color: #e9d5ff; margin-bottom: 12px; font-weight: 600; word-break: break-word; font-family: monospace;">
             "${goalText.replace(/</g, "&lt;")}"
           </div>
           <div style="display: flex; gap: 8px; justify-content: flex-end;">
             <button id="overwatch-keep-btn" style="
-              background: #3b82f6;
-              color: white;
-              border: none;
-              border-radius: 6px;
-              padding: 6px 12px;
-              font-size: 12px;
-              font-weight: 600;
+              background: #170f2c;
+              color: #e9d5ff;
+              border: 1px solid rgba(168, 85, 247, 0.4);
+              padding: 7px 14px;
+              font-size: 11px;
+              font-weight: 700;
+              letter-spacing: 1px;
               cursor: pointer;
-            ">Keep Tab</button>
+              clip-path: polygon(4px 0, 100% 0, calc(100% - 4px) 100%, 0 100%);
+            ">護 KEEP TAB</button>
             <button id="overwatch-close-btn" style="
-              background: rgba(239, 68, 68, 0.2);
-              color: #fca5a5;
-              border: 1px solid rgba(239, 68, 68, 0.4);
-              border-radius: 6px;
-              padding: 6px 12px;
-              font-size: 12px;
+              background: linear-gradient(135deg, #9333ea, #a855f7);
+              color: #fdfbf7;
+              border: none;
+              padding: 7px 14px;
+              font-size: 11px;
+              font-weight: 800;
+              letter-spacing: 1px;
               cursor: pointer;
-            ">Close Now</button>
+              box-shadow: 0 0 12px rgba(168, 85, 247, 0.4);
+              clip-path: polygon(4px 0, 100% 0, calc(100% - 4px) 100%, 0 100%);
+            ">斬 SEVER NOW</button>
           </div>
         `;
 

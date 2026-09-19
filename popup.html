@@ -2,22 +2,29 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>Overwatch AI</title>
+    <title>Overwatch AI // 監視</title>
     <style>
       :root {
-        --bg: #0b0f19;
-        --card: #131b2e;
-        --card-border: rgba(255, 255, 255, 0.08);
-        --text: #f1f5f9;
-        --muted: #94a3b8;
-        --brand: #6366f1;
-        --brand-glow: rgba(99, 102, 241, 0.3);
-        --brand-gradient: linear-gradient(135deg, #6366f1, #a855f7);
-        --danger: #ef4444;
-        --danger-bg: rgba(239, 68, 68, 0.15);
-        --success: #10b981;
-        --success-bg: rgba(16, 185, 129, 0.15);
-        --accent: #38bdf8;
+        --ink-void: #06040a;
+        --ink-deep: #0b0714;
+        --ink-surface: #120c22;
+        --ink-panel: #170f2c;
+        --ink-border: rgba(168, 85, 247, 0.3);
+        --ink-border-bright: rgba(192, 132, 252, 0.6);
+        
+        --purple-sun: #9333ea;
+        --purple-core: #a855f7;
+        --purple-glow: #c084fc;
+        --purple-aura: rgba(168, 85, 247, 0.25);
+        --purple-dark: #581c87;
+
+        --text-pure: #fcfaff;
+        --text-bright: #e9d5ff;
+        --text-dim: #998eb0;
+        --text-dark: #63587b;
+
+        --crimson: #f43f5e;
+        --crimson-glow: rgba(244, 63, 94, 0.3);
       }
 
       * {
@@ -27,96 +34,248 @@
       body {
         margin: 0;
         padding: 16px;
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-        color: var(--text);
-        background: radial-gradient(circle at top left, #1e1b4b 0%, var(--bg) 70%);
-        width: 420px;
-        min-height: 480px;
+        background-color: var(--ink-void);
+        color: var(--text-bright);
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
+        width: 440px;
+        min-height: 520px;
+        position: relative;
+        overflow-x: hidden;
+        /* Manga screentone dot texture */
+        background-image: 
+          radial-gradient(var(--ink-border) 0.8px, transparent 0.8px),
+          linear-gradient(180deg, #090613 0%, var(--ink-void) 100%);
+        background-size: 10px 10px, 100% 100%;
       }
 
+      /* Massive Glowing Purple Ink Sun backdrop (Reference Style) */
+      .ink-sun-backdrop {
+        position: absolute;
+        top: -60px;
+        right: -60px;
+        width: 220px;
+        height: 220px;
+        border-radius: 50%;
+        background: radial-gradient(circle, #a855f7 0%, #7e22ce 45%, #3b0764 75%, transparent 100%);
+        opacity: 0.45;
+        filter: blur(12px);
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .ink-splatter-accent {
+        position: absolute;
+        top: 20px;
+        right: 130px;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--purple-glow);
+        box-shadow: 
+          -15px 12px 0 2px var(--purple-sun),
+          25px -8px 0 1.5px var(--purple-core),
+          -30px 35px 0 1px var(--purple-dark),
+          -8px 45px 0 2.5px var(--purple-glow);
+        opacity: 0.6;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .container {
+        position: relative;
+        z-index: 1;
+      }
+
+      /* Header Panel */
       .header {
         display: flex;
         align-items: center;
         justify-content: space-between;
+        padding-bottom: 12px;
         margin-bottom: 14px;
-        padding-bottom: 10px;
-        border-bottom: 1px solid var(--card-border);
+        border-bottom: 2px solid var(--ink-border);
+        position: relative;
       }
 
-      .header-brand {
+      .header::after {
+        content: "";
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        width: 60px;
+        height: 2px;
+        background: var(--purple-glow);
+        box-shadow: 0 0 10px var(--purple-glow);
+      }
+
+      .brand-group {
         display: flex;
         align-items: center;
-        gap: 10px;
+        gap: 12px;
       }
 
-      .logo {
-        width: 28px;
-        height: 28px;
-        display: inline-flex;
-        border-radius: 8px;
-        overflow: hidden;
+      .logo-frame {
+        width: 38px;
+        height: 38px;
+        background: var(--ink-surface);
+        border: 1.5px solid var(--purple-core);
+        padding: 3px;
+        clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 6px 100%, 0 calc(100% - 6px));
+        box-shadow: 0 0 12px var(--purple-aura);
+        display: flex;
+        align-items: center;
+        justify-content: center;
       }
 
-      .logo img {
+      .logo-frame img {
         width: 100%;
         height: 100%;
       }
 
-      h1 {
+      .title-area h1 {
         margin: 0;
-        font-size: 17px;
-        font-weight: 700;
-        letter-spacing: -0.3px;
-      }
-
-      .badge {
-        font-size: 11px;
-        font-weight: 600;
-        padding: 3px 8px;
-        border-radius: 9999px;
-        display: inline-flex;
-        align-items: center;
-        gap: 5px;
-      }
-
-      .badge.active {
-        background: var(--success-bg);
-        color: #34d399;
-        border: 1px solid rgba(16, 185, 129, 0.3);
-      }
-
-      .badge.paused {
-        background: rgba(234, 179, 8, 0.15);
-        color: #facc15;
-        border: 1px solid rgba(234, 179, 8, 0.3);
-      }
-
-      .card {
-        background: var(--card);
-        border: 1px solid var(--card-border);
-        border-radius: 12px;
-        padding: 14px;
-        margin-bottom: 12px;
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-      }
-
-      .card-title {
-        font-size: 12px;
-        font-weight: 600;
+        font-size: 16px;
+        font-weight: 800;
+        letter-spacing: 1.5px;
+        color: var(--text-pure);
         text-transform: uppercase;
-        letter-spacing: 0.6px;
-        color: var(--muted);
-        margin-bottom: 8px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .title-area .kanji-badge {
+        font-size: 11px;
+        background: var(--purple-sun);
+        color: white;
+        padding: 1px 5px;
+        border-radius: 2px;
+        font-weight: 900;
+        letter-spacing: 0;
+      }
+
+      .title-area .sub {
+        font-size: 10px;
+        letter-spacing: 1.2px;
+        color: var(--purple-glow);
+        text-transform: uppercase;
+        font-family: monospace;
+      }
+
+      /* Status Badge */
+      .status-pill {
+        font-family: monospace;
+        font-size: 11px;
+        font-weight: 700;
+        padding: 4px 10px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border: 1px solid var(--ink-border);
+        background: var(--ink-surface);
+        clip-path: polygon(6px 0, 100% 0, calc(100% - 6px) 100%, 0 100%);
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .status-pill.active {
+        border-color: var(--purple-core);
+        color: var(--purple-glow);
+        box-shadow: 0 0 12px rgba(168, 85, 247, 0.35);
+      }
+
+      .status-pill.active .indicator {
+        width: 7px;
+        height: 7px;
+        background: var(--purple-glow);
+        border-radius: 50%;
+        box-shadow: 0 0 8px var(--purple-core);
+        animation: pulse 2s infinite;
+      }
+
+      .status-pill.paused {
+        border-color: rgba(244, 63, 94, 0.4);
+        color: var(--crimson);
+      }
+
+      .status-pill.paused .indicator {
+        width: 7px;
+        height: 7px;
+        background: var(--crimson);
+        border-radius: 50%;
+      }
+
+      @keyframes pulse {
+        0%, 100% { opacity: 1; transform: scale(1); }
+        50% { opacity: 0.4; transform: scale(0.85); }
+      }
+
+      /* Manga Card Panels with Angled Corners */
+      .manga-panel {
+        background: var(--ink-surface);
+        border: 1px solid var(--ink-border);
+        padding: 13px 14px;
+        margin-bottom: 12px;
+        position: relative;
+        clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+      }
+
+      /* Authentic manga corner markers */
+      .manga-panel::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 6px;
+        height: 6px;
+        border-top: 2px solid var(--purple-glow);
+        border-left: 2px solid var(--purple-glow);
+      }
+
+      .manga-panel::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        width: 6px;
+        height: 6px;
+        border-bottom: 2px solid var(--purple-glow);
+        border-right: 2px solid var(--purple-glow);
+      }
+
+      .panel-header {
         display: flex;
         align-items: center;
         justify-content: space-between;
+        margin-bottom: 8px;
       }
 
+      .panel-label {
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 1.4px;
+        text-transform: uppercase;
+        color: var(--purple-glow);
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .panel-label .glyph {
+        color: var(--purple-sun);
+        font-size: 12px;
+      }
+
+      /* Form inputs */
       label {
         display: block;
-        font-size: 12px;
-        color: var(--muted);
+        font-size: 11px;
+        letter-spacing: 0.8px;
+        color: var(--text-dim);
         margin-bottom: 5px;
+        text-transform: uppercase;
+        font-family: monospace;
       }
 
       input[type="text"],
@@ -124,94 +283,96 @@
       select,
       textarea {
         width: 100%;
-        padding: 9px 12px;
+        padding: 10px 12px;
         font-size: 13px;
-        color: var(--text);
-        background: rgba(11, 15, 25, 0.8);
-        border: 1px solid var(--card-border);
-        border-radius: 8px;
+        color: var(--text-pure);
+        background: var(--ink-deep);
+        border: 1px solid var(--ink-border);
         outline: none;
         box-sizing: border-box;
-        transition: border-color 0.2s, box-shadow 0.2s;
+        transition: all 0.2s ease;
         font-family: inherit;
+        border-radius: 0;
+        clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 0 100%);
       }
 
       input:focus,
       select:focus,
       textarea:focus {
-        border-color: var(--brand);
-        box-shadow: 0 0 0 2px var(--brand-glow);
+        border-color: var(--purple-core);
+        background: #150e2a;
+        box-shadow: 0 0 10px var(--purple-aura), inset 0 0 8px rgba(168, 85, 247, 0.15);
       }
 
       textarea {
         resize: vertical;
-        min-height: 54px;
-        line-height: 1.4;
+        min-height: 58px;
+        line-height: 1.45;
       }
 
-      .row {
-        display: flex;
-        gap: 8px;
-        align-items: center;
-      }
-
-      .space-between {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-      }
-
-      button {
+      /* Sharp Anime Blade Buttons */
+      .btn {
         appearance: none;
         border: none;
-        border-radius: 8px;
-        padding: 8px 14px;
-        font-size: 13px;
-        font-weight: 600;
+        padding: 9px 16px;
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: 1.2px;
+        text-transform: uppercase;
         cursor: pointer;
-        transition: opacity 0.2s, transform 0.1s;
+        transition: all 0.15s ease;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        position: relative;
+        clip-path: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px);
       }
 
-      button:active {
-        transform: scale(0.98);
+      .btn:active {
+        transform: translateY(1px);
       }
 
-      button:disabled {
-        opacity: 0.5;
+      .btn:disabled {
+        opacity: 0.4;
         cursor: not-allowed;
       }
 
       .btn-primary {
-        background: var(--brand-gradient);
-        color: white;
-        box-shadow: 0 2px 10px var(--brand-glow);
+        background: linear-gradient(135deg, var(--purple-sun), var(--purple-core));
+        color: var(--text-pure);
+        box-shadow: 0 0 14px var(--purple-aura);
+        border-left: 2px solid #f5d0fe;
       }
 
       .btn-primary:hover:not(:disabled) {
-        opacity: 0.92;
+        background: linear-gradient(135deg, var(--purple-core), #c084fc);
+        box-shadow: 0 0 20px rgba(168, 85, 247, 0.5);
       }
 
       .btn-secondary {
-        background: rgba(255, 255, 255, 0.07);
-        color: var(--text);
-        border: 1px solid var(--card-border);
+        background: var(--ink-panel);
+        color: var(--text-bright);
+        border: 1px solid var(--ink-border);
       }
 
       .btn-secondary:hover:not(:disabled) {
-        background: rgba(255, 255, 255, 0.12);
+        border-color: var(--purple-glow);
+        color: var(--text-pure);
+        background: #1f153a;
       }
 
       .btn-sm {
         padding: 5px 10px;
-        font-size: 12px;
+        font-size: 10.5px;
       }
 
-      /* Toggle Switch */
+      /* Cyber-Manga Custom Toggle */
       .switch {
         position: relative;
         display: inline-block;
-        width: 44px;
-        height: 24px;
+        width: 48px;
+        height: 22px;
       }
 
       .switch input {
@@ -227,64 +388,70 @@
         left: 0;
         right: 0;
         bottom: 0;
-        background-color: rgba(255, 255, 255, 0.15);
-        transition: 0.3s;
-        border-radius: 24px;
+        background-color: var(--ink-deep);
+        border: 1px solid var(--ink-border);
+        transition: 0.25s;
+        clip-path: polygon(4px 0, 100% 0, calc(100% - 4px) 100%, 0 100%);
       }
 
       .slider:before {
         position: absolute;
         content: "";
-        height: 18px;
+        height: 14px;
         width: 18px;
         left: 3px;
         bottom: 3px;
-        background-color: white;
-        transition: 0.3s;
-        border-radius: 50%;
+        background-color: var(--text-dim);
+        transition: 0.25s;
+        clip-path: polygon(3px 0, 100% 0, calc(100% - 3px) 100%, 0 100%);
       }
 
       input:checked + .slider {
-        background-color: var(--brand);
+        background-color: var(--purple-dark);
+        border-color: var(--purple-glow);
+        box-shadow: 0 0 10px var(--purple-aura);
       }
 
       input:checked + .slider:before {
-        transform: translateX(20px);
+        transform: translateX(23px);
+        background-color: var(--purple-glow);
+        box-shadow: 0 0 8px var(--purple-core);
       }
 
-      /* Domain Tags */
+      /* Tag List */
       .tag-container {
         display: flex;
         flex-wrap: wrap;
         gap: 6px;
         margin-top: 8px;
-        max-height: 80px;
+        max-height: 75px;
         overflow-y: auto;
       }
 
       .tag {
-        background: rgba(255, 255, 255, 0.08);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 6px;
-        padding: 2px 8px;
+        background: var(--ink-deep);
+        border: 1px solid var(--ink-border);
+        padding: 3px 8px;
         font-size: 11px;
+        font-family: monospace;
+        color: var(--text-bright);
         display: inline-flex;
         align-items: center;
-        gap: 5px;
-        color: #cbd5e1;
+        gap: 6px;
+        clip-path: polygon(4px 0, 100% 0, calc(100% - 4px) 100%, 0 100%);
       }
 
       .tag-remove {
         cursor: pointer;
-        color: var(--muted);
+        color: var(--text-dim);
         font-weight: bold;
       }
 
       .tag-remove:hover {
-        color: var(--danger);
+        color: var(--crimson);
       }
 
-      /* Graveyard List */
+      /* Fallen Tabs (Graveyard) */
       .graveyard-list {
         display: flex;
         flex-direction: column;
@@ -295,14 +462,23 @@
       }
 
       .graveyard-item {
-        background: rgba(11, 15, 25, 0.6);
-        border: 1px solid var(--card-border);
-        border-radius: 8px;
+        background: var(--ink-deep);
+        border: 1px solid var(--ink-border);
         padding: 8px 10px;
         display: flex;
         align-items: center;
         justify-content: space-between;
         gap: 10px;
+        position: relative;
+        clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 0 100%);
+      }
+
+      .graveyard-item::before {
+        content: "斬";
+        font-size: 10px;
+        color: var(--purple-core);
+        font-weight: 900;
+        margin-right: -2px;
       }
 
       .graveyard-info {
@@ -311,180 +487,208 @@
       }
 
       .graveyard-title {
-        font-size: 12px;
-        font-weight: 500;
+        font-size: 11.5px;
+        font-weight: 600;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
-        color: #e2e8f0;
+        color: var(--text-pure);
       }
 
       .graveyard-meta {
-        font-size: 11px;
-        color: var(--muted);
+        font-size: 10px;
+        font-family: monospace;
+        color: var(--text-dim);
         display: flex;
         gap: 6px;
       }
 
       .empty-state {
         text-align: center;
-        font-size: 12px;
-        color: var(--muted);
-        padding: 12px 0;
+        font-size: 11px;
+        font-family: monospace;
+        color: var(--text-dark);
+        padding: 14px 0;
+        letter-spacing: 1px;
       }
 
       .status-msg {
-        font-size: 12px;
+        font-size: 11.5px;
+        font-family: monospace;
         margin-top: 8px;
         display: none;
       }
 
       .status-msg.ok {
         display: block;
-        color: var(--success);
+        color: var(--purple-glow);
+        text-shadow: 0 0 6px var(--purple-aura);
       }
 
       .status-msg.error {
         display: block;
-        color: var(--danger);
+        color: var(--crimson);
       }
 
+      /* Footer */
       .footer {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        font-size: 11px;
-        color: var(--muted);
-        margin-top: 10px;
+        font-size: 10px;
+        font-family: monospace;
+        letter-spacing: 1px;
+        color: var(--text-dim);
+        margin-top: 12px;
         padding-top: 8px;
-        border-top: 1px solid var(--card-border);
+        border-top: 1px solid var(--ink-border);
       }
 
       a {
-        color: #818cf8;
+        color: var(--purple-glow);
         text-decoration: none;
+        transition: color 0.15s ease;
       }
 
       a:hover {
-        text-decoration: underline;
+        color: #f5d0fe;
+        text-shadow: 0 0 8px var(--purple-core);
       }
 
       #setup-view {
         display: none;
       }
-
-      #main-view {
-        display: none;
-      }
     </style>
   </head>
   <body>
-    <!-- Header -->
-    <div class="header">
-      <div class="header-brand">
-        <div class="logo">
-          <img src="assets/logo.svg" alt="Overwatch AI Logo" />
-        </div>
-        <div>
-          <h1>Overwatch AI</h1>
-        </div>
-      </div>
-      <div id="statusBadge" class="badge active">
-        <span>🟢 Monitoring</span>
-      </div>
-    </div>
+    <!-- Background Ink Elements -->
+    <div class="ink-sun-backdrop"></div>
+    <div class="ink-splatter-accent"></div>
 
-    <!-- Setup View (When API Key is missing) -->
-    <div id="setup-view" class="card">
-      <div class="card-title">Setup TypeSafe AI Key</div>
-      <p style="font-size: 12.5px; color: var(--muted); margin-top: 0; line-height: 1.4;">
-        Overwatch AI uses <strong>Jev</strong> (TypeSafe System One model) for sub-200ms real-time tab classification.
-      </p>
-      <label for="apiKey">TypeSafe API Key</label>
-      <input
-        id="apiKey"
-        type="password"
-        placeholder="ts_live_..."
-        autocomplete="off"
-      />
-      <p style="font-size: 11.5px; color: var(--muted); margin: 6px 0 14px 0;">
-        Get an early access key from the
-        <a href="https://console.typesafe.ai/keys" target="_blank" rel="noopener noreferrer">TypeSafe Console</a>.
-      </p>
-      <div class="row">
-        <button id="saveKeyBtn" class="btn-primary">Save & Validate Key</button>
-        <button id="openConsoleBtn" class="btn-secondary">Open Console</button>
-      </div>
-      <div id="setupStatus" class="status-msg"></div>
-    </div>
-
-    <!-- Main View -->
-    <div id="main-view">
-      <!-- Goal Card -->
-      <div class="card">
-        <div class="card-title">
-          <span>Current Focus Goal</span>
-          <label class="switch" title="Toggle Monitoring">
-            <input id="monitoringToggle" type="checkbox" checked />
-            <span class="slider"></span>
-          </label>
-        </div>
-        <textarea
-          id="workPrompt"
-          placeholder="e.g. Building OAuth JWT authentication in Go and React"
-        ></textarea>
-        <div class="row" style="margin-top: 8px; justify-content: flex-end;">
-          <button id="savePromptBtn" class="btn-primary btn-sm">Update Goal</button>
-        </div>
-        <div id="goalStatus" class="status-msg"></div>
-      </div>
-
-      <!-- Enforcement Mode & Settings -->
-      <div class="card">
-        <div class="space-between">
-          <div>
-            <label for="enforcementSelect" style="margin-bottom: 2px;">Intervention Mode</label>
-            <span style="font-size: 11px; color: var(--muted);">How to handle detected distractions</span>
+    <div class="container">
+      <!-- Header -->
+      <div class="header">
+        <div class="brand-group">
+          <div class="logo-frame">
+            <img src="assets/logo.svg" alt="Overwatch AI Emblem" />
           </div>
-          <select id="enforcementSelect" style="width: auto; padding: 6px 8px; font-size: 12px;">
-            <option value="grace">5s Grace Warning</option>
-            <option value="instant">Instant Close</option>
-          </select>
+          <div class="title-area">
+            <h1>OVERWATCH <span class="kanji-badge">監視</span></h1>
+            <div class="sub">// JEV SYSTEM ONE ENGINE</div>
+          </div>
+        </div>
+        <div id="statusBadge" class="status-pill active">
+          <span class="indicator"></span>
+          <span>監視中 ACTIVE</span>
         </div>
       </div>
 
-      <!-- Custom Allowlist -->
-      <div class="card">
-        <div class="card-title">Allowed Domains</div>
-        <div class="row">
-          <input
-            id="newDomainInput"
-            type="text"
-            placeholder="e.g. youtube.com, twitch.tv"
-            style="flex: 1;"
-          />
-          <button id="addDomainBtn" class="btn-secondary btn-sm">Add</button>
+      <!-- Setup View (When API Key is missing) -->
+      <div id="setup-view" class="manga-panel">
+        <div class="panel-label">
+          <span class="glyph">❖</span>
+          <span>INITIALIZE // API KEY REGISTRATION</span>
         </div>
-        <div id="allowedTags" class="tag-container">
-          <!-- Dynamically populated -->
+        <p style="font-size: 12px; color: var(--text-dim); margin: 6px 0 12px 0; line-height: 1.45;">
+          Connect to <strong>TypeSafe Jev</strong>. Evaluates incoming tabs in sub-200ms with typed decision primitives.
+        </p>
+        <label for="apiKey">[ 鍵 ] TYPESAFE API KEY</label>
+        <input
+          id="apiKey"
+          type="password"
+          placeholder="ts_live_..."
+          autocomplete="off"
+        />
+        <p style="font-size: 11px; font-family: monospace; color: var(--text-dim); margin: 8px 0 14px 0;">
+          OBTAIN ACCESS KEY AT <a href="https://console.typesafe.ai/keys" target="_blank" rel="noopener noreferrer">CONSOLE.TYPESAFE.AI ↗</a>
+        </p>
+        <div style="display: flex; gap: 8px;">
+          <button id="saveKeyBtn" class="btn btn-primary" style="flex: 1;">AUTHENTICATE KEY</button>
+          <button id="openConsoleBtn" class="btn btn-secondary">CONSOLE</button>
         </div>
+        <div id="setupStatus" class="status-msg"></div>
       </div>
 
-      <!-- Tab Graveyard -->
-      <div class="card">
-        <div class="card-title">
-          <span>Recently Closed Distractions</span>
-          <button id="clearGraveyardBtn" class="btn-secondary btn-sm" style="font-size: 10px; padding: 2px 6px;">Clear</button>
+      <!-- Main View -->
+      <div id="main-view">
+        <!-- Active Focus Goal Panel -->
+        <div class="manga-panel">
+          <div class="panel-header">
+            <div class="panel-label">
+              <span class="glyph">⚔</span>
+              <span>ACTIVE FOCUS MISSION // 集中目標</span>
+            </div>
+            <label class="switch" title="Toggle Monitoring Protocol">
+              <input id="monitoringToggle" type="checkbox" checked />
+              <span class="slider"></span>
+            </label>
+          </div>
+          <textarea
+            id="workPrompt"
+            placeholder="Define your coding mission: e.g. Implementing auth middleware in Go using JWT"
+          ></textarea>
+          <div style="display: flex; justify-content: flex-end; margin-top: 8px;">
+            <button id="savePromptBtn" class="btn btn-primary btn-sm">UPDATE MISSION</button>
+          </div>
+          <div id="goalStatus" class="status-msg"></div>
         </div>
-        <div id="graveyardList" class="graveyard-list">
-          <div class="empty-state">No distractions closed yet. Keep focused! 🚀</div>
-        </div>
-      </div>
 
-      <!-- Footer -->
-      <div class="footer">
-        <span>Powered by <strong>Jev</strong> (TypeSafe AI)</span>
-        <a id="changeKeyBtn" href="#">API Key Settings</a>
+        <!-- Protocol Mode -->
+        <div class="manga-panel">
+          <div style="display: flex; align-items: center; justify-content: space-between;">
+            <div>
+              <div class="panel-label" style="margin-bottom: 2px;">
+                <span class="glyph">⚡</span>
+                <span>INTERVENTION PROTOCOL</span>
+              </div>
+              <span style="font-size: 10.5px; font-family: monospace; color: var(--text-dim);">RESPONSE ACTION ON DISTRACTION</span>
+            </div>
+            <select id="enforcementSelect" style="width: auto; padding: 6px 10px; font-size: 11px;">
+              <option value="grace">5S GRACE WARNING</option>
+              <option value="instant">INSTANT SEVER (CLOSE)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Allowed Domains / Sanctuary -->
+        <div class="manga-panel">
+          <div class="panel-label">
+            <span class="glyph">🛡</span>
+            <span>SANCTUARY DOMAINS // 許容領域</span>
+          </div>
+          <div style="display: flex; gap: 8px; margin-top: 6px;">
+            <input
+              id="newDomainInput"
+              type="text"
+              placeholder="e.g. youtube.com, twitch.tv"
+              style="flex: 1;"
+            />
+            <button id="addDomainBtn" class="btn btn-secondary btn-sm">ALLOW</button>
+          </div>
+          <div id="allowedTags" class="tag-container">
+            <!-- Dynamically populated -->
+          </div>
+        </div>
+
+        <!-- Tab Graveyard (Slain Tabs) -->
+        <div class="manga-panel">
+          <div class="panel-header">
+            <div class="panel-label">
+              <span class="glyph">斬</span>
+              <span>SLAIN DISTRACTIONS // 討滅録</span>
+            </div>
+            <button id="clearGraveyardBtn" class="btn btn-secondary btn-sm" style="font-size: 9.5px; padding: 2px 8px;">PURGE</button>
+          </div>
+          <div id="graveyardList" class="graveyard-list">
+            <div class="empty-state">// NO DISTRACTIONS SLAIN YET. DISCIPLINE MAINTAINED.</div>
+          </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+          <span>POWERED BY <strong>JEV</strong> // TYPESAFE AI</span>
+          <a id="changeKeyBtn" href="#">API KEY CONFIG</a>
+        </div>
       </div>
     </div>
 
