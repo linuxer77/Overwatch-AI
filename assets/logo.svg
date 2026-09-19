@@ -1,52 +1,51 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
   <defs>
-    <!-- Purple Sun Gradient (like the red circle in the reference) -->
-    <radialGradient id="purpleSun" cx="48%" cy="48%" r="52%">
-      <stop offset="0%" stop-color="#b86bff"/>
-      <stop offset="65%" stop-color="#8b2fc9"/>
-      <stop offset="90%" stop-color="#6b149b"/>
-      <stop offset="100%" stop-color="#4a0870"/>
-    </radialGradient>
+    <clipPath id="logoTop">
+      <rect x="0" y="0" width="128" height="64" />
+    </clipPath>
+    <clipPath id="logoBottom">
+      <rect x="0" y="64" width="128" height="64" />
+    </clipPath>
+    <filter id="cloudSoft" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="1.8" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
   </defs>
 
-  <!-- Dark sketch paper background -->
-  <rect width="128" height="128" rx="16" fill="#13101c"/>
+  <!-- Top Canvas (White) -->
+  <rect x="0" y="0" width="128" height="64" fill="#fcfbf9" />
 
-  <!-- Ink Splatter Droplets (Background) -->
-  <circle cx="18" cy="22" r="3" fill="#8b2fc9" opacity="0.6"/>
-  <circle cx="26" cy="14" r="1.5" fill="#b86bff" opacity="0.7"/>
-  <circle cx="14" cy="38" r="2" fill="#6b149b" opacity="0.5"/>
-  <circle cx="108" cy="24" r="3.5" fill="#8b2fc9" opacity="0.6"/>
-  <circle cx="116" cy="34" r="2" fill="#b86bff" opacity="0.5"/>
-  <circle cx="112" cy="14" r="1.8" fill="#6b149b" opacity="0.6"/>
-  <circle cx="110" cy="106" r="3" fill="#8b2fc9" opacity="0.7"/>
-  <circle cx="118" cy="96" r="1.5" fill="#b86bff" opacity="0.5"/>
-  <circle cx="22" cy="108" r="2.5" fill="#6b149b" opacity="0.6"/>
-  <circle cx="14" cy="98" r="1.8" fill="#8b2fc9" opacity="0.5"/>
+  <!-- Bottom Canvas (Purple) -->
+  <rect id="logoBottomRect" x="0" y="64" width="128" height="64" fill="#6b21a8" />
 
-  <!-- Bold Purple Sun (Hand-drawn Ink Wash Circle) -->
-  <circle cx="64" cy="64" r="46" fill="url(#purpleSun)"/>
+  <!-- Watercolor Cloud (Top Mint) -->
+  <g clip-path="url(#logoTop)">
+    <path d="M 60 18 C 75 14, 95 24, 96 38 C 108 36, 120 52, 115 64 C 122 78, 112 96, 98 100 C 92 110, 75 118, 62 114 C 48 119, 30 108, 26 96 C 14 90, 8 72, 14 58 C 10 44, 20 28, 34 26 C 40 14, 54 14, 60 18 Z" fill="#2dd4bf" opacity="0.85" filter="url(#cloudSoft)" />
+    <path d="M 60 18 C 75 14, 95 24, 96 38 C 108 36, 120 52, 115 64 C 122 78, 112 96, 98 100 C 92 110, 75 118, 62 114 C 48 119, 30 108, 26 96 C 14 90, 8 72, 14 58 C 10 44, 20 28, 34 26 C 40 14, 54 14, 60 18 Z" fill="#14b8a6" opacity="0.4" />
+  </g>
 
-  <!-- Sketchy Ink Splatter Marks on the Sun -->
-  <circle cx="42" cy="36" r="4" fill="#13101c" opacity="0.4"/>
-  <circle cx="86" cy="48" r="5" fill="#13101c" opacity="0.35"/>
-  <circle cx="48" cy="88" r="3.5" fill="#13101c" opacity="0.4"/>
-  <circle cx="78" cy="82" r="4.5" fill="#13101c" opacity="0.35"/>
+  <!-- Watercolor Cloud (Bottom Dark Shadow) -->
+  <g clip-path="url(#logoBottom)">
+    <path d="M 60 18 C 75 14, 95 24, 96 38 C 108 36, 120 52, 115 64 C 122 78, 112 96, 98 100 C 92 110, 75 118, 62 114 C 48 119, 30 108, 26 96 C 14 90, 8 72, 14 58 C 10 44, 20 28, 34 26 C 40 14, 54 14, 60 18 Z" fill="#220638" opacity="0.95" filter="url(#cloudSoft)" />
+  </g>
 
-  <!-- Hand-Drawn Ink Brush Eye / Watcher Silhouette -->
-  <!-- Upper Brush Stroke -->
-  <path d="M 28 64 C 42 42, 86 42, 100 64 C 84 50, 44 50, 28 64 Z" fill="#13101c"/>
-  <!-- Lower Brush Stroke -->
-  <path d="M 28 64 C 44 78, 84 78, 100 64 C 86 72, 42 72, 28 64 Z" fill="#13101c"/>
+  <!-- Horizon Bisection -->
+  <line x1="0" y1="64" x2="128" y2="64" stroke="#170428" stroke-width="1.5" />
 
-  <!-- Center Pupil with Ink Glow -->
-  <circle cx="64" cy="64" r="11" fill="#13101c"/>
-  <circle cx="64" cy="64" r="5.5" fill="#fdfbf7"/>
-  <circle cx="66" cy="62" r="2" fill="#ffffff"/>
+  <!-- Wireframe Pyramid -->
+  <g>
+    <!-- Pyramid base tint -->
+    <polygon points="64,14 16,64 112,64" fill="#ef4444" fill-opacity="0.15" />
+    <!-- Triangle outline -->
+    <polygon points="64,14 16,64 112,64" fill="none" stroke="#dc2626" stroke-width="1.4" />
+    <!-- Perspective grid -->
+  <line x1="64" y1="14" x2="16.0" y2="64" stroke="#ef4444" stroke-width="0.75" />  <line x1="64" y1="14" x2="22.0" y2="64" stroke="#ef4444" stroke-width="0.75" />  <line x1="64" y1="14" x2="28.0" y2="64" stroke="#ef4444" stroke-width="0.75" />  <line x1="64" y1="14" x2="34.0" y2="64" stroke="#ef4444" stroke-width="0.75" />  <line x1="64" y1="14" x2="40.0" y2="64" stroke="#ef4444" stroke-width="0.75" />  <line x1="64" y1="14" x2="46.0" y2="64" stroke="#ef4444" stroke-width="0.75" />  <line x1="64" y1="14" x2="52.0" y2="64" stroke="#ef4444" stroke-width="0.75" />  <line x1="64" y1="14" x2="58.0" y2="64" stroke="#ef4444" stroke-width="0.75" />  <line x1="64" y1="14" x2="64.0" y2="64" stroke="#ef4444" stroke-width="0.75" />  <line x1="64" y1="14" x2="70.0" y2="64" stroke="#ef4444" stroke-width="0.75" />  <line x1="64" y1="14" x2="76.0" y2="64" stroke="#ef4444" stroke-width="0.75" />  <line x1="64" y1="14" x2="82.0" y2="64" stroke="#ef4444" stroke-width="0.75" />  <line x1="64" y1="14" x2="88.0" y2="64" stroke="#ef4444" stroke-width="0.75" />  <line x1="64" y1="14" x2="94.0" y2="64" stroke="#ef4444" stroke-width="0.75" />  <line x1="64" y1="14" x2="100.0" y2="64" stroke="#ef4444" stroke-width="0.75" />  <line x1="64" y1="14" x2="106.0" y2="64" stroke="#ef4444" stroke-width="0.75" />  <line x1="64" y1="14" x2="112.0" y2="64" stroke="#ef4444" stroke-width="0.75" />
+  <line x1="63.4" y1="14.7" x2="64.6" y2="14.7" stroke="#ef4444" stroke-width="0.75" />  <line x1="62.2" y1="15.9" x2="65.8" y2="15.9" stroke="#ef4444" stroke-width="0.75" />  <line x1="60.7" y1="17.4" x2="67.3" y2="17.4" stroke="#ef4444" stroke-width="0.75" />  <line x1="59.0" y1="19.2" x2="69.0" y2="19.2" stroke="#ef4444" stroke-width="0.75" />  <line x1="57.0" y1="21.3" x2="71.0" y2="21.3" stroke="#ef4444" stroke-width="0.75" />  <line x1="54.8" y1="23.6" x2="73.2" y2="23.6" stroke="#ef4444" stroke-width="0.75" />  <line x1="52.4" y1="26.1" x2="75.6" y2="26.1" stroke="#ef4444" stroke-width="0.75" />  <line x1="49.8" y1="28.8" x2="78.2" y2="28.8" stroke="#ef4444" stroke-width="0.75" />  <line x1="47.0" y1="31.7" x2="81.0" y2="31.7" stroke="#ef4444" stroke-width="0.75" />  <line x1="44.1" y1="34.7" x2="83.9" y2="34.7" stroke="#ef4444" stroke-width="0.75" />  <line x1="41.1" y1="37.9" x2="86.9" y2="37.9" stroke="#ef4444" stroke-width="0.75" />  <line x1="37.9" y1="41.2" x2="90.1" y2="41.2" stroke="#ef4444" stroke-width="0.75" />  <line x1="34.5" y1="44.7" x2="93.5" y2="44.7" stroke="#ef4444" stroke-width="0.75" />  <line x1="31.1" y1="48.3" x2="96.9" y2="48.3" stroke="#ef4444" stroke-width="0.75" />  <line x1="27.5" y1="52.0" x2="100.5" y2="52.0" stroke="#ef4444" stroke-width="0.75" />  <line x1="23.8" y1="55.9" x2="104.2" y2="55.9" stroke="#ef4444" stroke-width="0.75" />  <line x1="19.9" y1="59.9" x2="108.1" y2="59.9" stroke="#ef4444" stroke-width="0.75" />
+  </g>
 
-  <!-- Raw Sketch Hatching Lines -->
-  <line x1="64" y1="20" x2="64" y2="30" stroke="#fdfbf7" stroke-width="1.8" stroke-linecap="round" opacity="0.8"/>
-  <line x1="64" y1="98" x2="64" y2="108" stroke="#fdfbf7" stroke-width="1.8" stroke-linecap="round" opacity="0.8"/>
-  <line x1="20" y1="64" x2="30" y2="64" stroke="#fdfbf7" stroke-width="1.8" stroke-linecap="round" opacity="0.8"/>
-  <line x1="98" y1="64" x2="108" y2="64" stroke="#fdfbf7" stroke-width="1.8" stroke-linecap="round" opacity="0.8"/>
+  <!-- Outer frame border -->
+  <rect x="0.75" y="0.75" width="126.5" height="126.5" rx="16" fill="none" stroke="rgba(0,0,0,0.15)" stroke-width="1.5" />
 </svg>

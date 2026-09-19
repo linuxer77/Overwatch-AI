@@ -1,5 +1,5 @@
 /**
- * Overwatch AI - Popup Controller (Clean Sketch Style)
+ * Overwatch AI - Popup Controller (Constructivist / Geometric Art Style)
  */
 
 const api = typeof browser !== "undefined" ? browser : chrome;
@@ -7,7 +7,7 @@ const api = typeof browser !== "undefined" ? browser : chrome;
 document.addEventListener("DOMContentLoaded", async () => {
   // Views
   const setupView = document.getElementById("setup-view");
-  const mainView = document.getElementById("main-view");
+  const promptPanel = document.getElementById("prompt-panel");
   const statusBadge = document.getElementById("statusBadge");
 
   // Setup elements
@@ -29,27 +29,31 @@ document.addEventListener("DOMContentLoaded", async () => {
   const clearGraveyardBtn = document.getElementById("clearGraveyardBtn");
   const changeKeyBtn = document.getElementById("changeKeyBtn");
 
+  // Palette switcher buttons
+  const setPurpleThemeBtn = document.getElementById("setPurpleTheme");
+  const setCrimsonThemeBtn = document.getElementById("setCrimsonTheme");
+
   function showSetup() {
     setupView.style.display = "block";
-    mainView.style.display = "none";
-    statusBadge.className = "status-pill paused";
-    statusBadge.innerHTML = '<span class="indicator"></span><span>Setup</span>';
+    if (promptPanel) promptPanel.style.display = "none";
+    statusBadge.className = "status-stamp paused";
+    statusBadge.innerHTML = '<span class="dot"></span><span>SETUP</span>';
     apiKeyInput.focus();
   }
 
   function showMain(isMonitoring = true) {
     setupView.style.display = "none";
-    mainView.style.display = "block";
+    if (promptPanel) promptPanel.style.display = "block";
     updateStatusBadge(isMonitoring);
   }
 
   function updateStatusBadge(isActive) {
     if (isActive) {
-      statusBadge.className = "status-pill active";
-      statusBadge.innerHTML = '<span class="indicator"></span><span>Active</span>';
+      statusBadge.className = "status-stamp active";
+      statusBadge.innerHTML = '<span class="dot"></span><span>ACTIVE</span>';
     } else {
-      statusBadge.className = "status-pill paused";
-      statusBadge.innerHTML = '<span class="indicator"></span><span>Paused</span>';
+      statusBadge.className = "status-stamp paused";
+      statusBadge.innerHTML = '<span class="dot"></span><span>PAUSED</span>';
     }
   }
 
@@ -62,20 +66,20 @@ document.addEventListener("DOMContentLoaded", async () => {
     return `${hours}h ago`;
   }
 
-  // Render user allowed domain tags
+  // Render allowed domain tags
   function renderDomainTags(domains = []) {
     allowedTags.innerHTML = "";
     if (domains.length === 0) {
-      allowedTags.innerHTML = '<span style="font-size: 11px; color: var(--text-muted); font-style: italic;">No custom domains added</span>';
+      allowedTags.innerHTML = '<span style="font-size: 10px; color: var(--text-on-theme-dim); font-style: italic;">No custom domains added</span>';
       return;
     }
 
     domains.forEach(domain => {
       const tag = document.createElement("span");
-      tag.className = "tag";
+      tag.className = "tag-item";
       tag.innerHTML = `
         <span>${domain}</span>
-        <span class="tag-remove" data-domain="${domain}">&times;</span>
+        <span class="tag-del" data-domain="${domain}">&times;</span>
       `;
       allowedTags.appendChild(tag);
     });
@@ -85,23 +89,23 @@ document.addEventListener("DOMContentLoaded", async () => {
   function renderGraveyard(items = []) {
     graveyardList.innerHTML = "";
     if (items.length === 0) {
-      graveyardList.innerHTML = '<div class="empty-state">No closed tabs yet.</div>';
+      graveyardList.innerHTML = '<div class="empty-state">No closed tabs.</div>';
       return;
     }
 
     items.forEach(item => {
       const row = document.createElement("div");
-      row.className = "graveyard-item";
+      row.className = "closed-item";
       row.innerHTML = `
-        <div class="graveyard-info">
-          <div class="graveyard-title" title="${item.title}">${item.title}</div>
-          <div class="graveyard-meta">
+        <div class="closed-info">
+          <div class="closed-title" title="${item.title}">${item.title}</div>
+          <div class="closed-meta">
             <span>${item.domain || "tab"}</span>
             <span>•</span>
             <span>${formatTimeAgo(item.closedAt)}</span>
           </div>
         </div>
-        <button class="btn btn-secondary btn-sm restore-btn" data-url="${item.url}" title="Reopen this tab">Restore</button>
+        <button class="theme-outline-btn theme-outline-btn-sm restore-btn" data-url="${item.url}" title="Reopen this tab">RESTORE</button>
       `;
       graveyardList.appendChild(row);
     });
@@ -121,15 +125,20 @@ document.addEventListener("DOMContentLoaded", async () => {
         isMonitoringEnabled = true,
         enforcementMode = "grace",
         whitelistDomains = [],
-        recentlyClosed = []
+        recentlyClosed = [],
+        colorTheme = "purple"
       } = await api.storage.local.get([
         "typesafeApiKey",
         "workPrompt",
         "isMonitoringEnabled",
         "enforcementMode",
         "whitelistDomains",
-        "recentlyClosed"
+        "recentlyClosed",
+        "colorTheme"
       ]);
+
+      // Apply saved color theme (purple or crimson)
+      document.documentElement.setAttribute("data-theme", colorTheme);
 
       if (typesafeApiKey) {
         showMain(isMonitoringEnabled);
@@ -147,6 +156,17 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   }
 
+  // Theme switcher handlers
+  setPurpleThemeBtn?.addEventListener("click", async () => {
+    document.documentElement.setAttribute("data-theme", "purple");
+    await api.storage?.local?.set({ colorTheme: "purple" });
+  });
+
+  setCrimsonThemeBtn?.addEventListener("click", async () => {
+    document.documentElement.setAttribute("data-theme", "crimson");
+    await api.storage?.local?.set({ colorTheme: "crimson" });
+  });
+
   // Save API Key & test with Jev
   saveKeyBtn?.addEventListener("click", async () => {
     const key = apiKeyInput.value.trim();
@@ -157,7 +177,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     saveKeyBtn.disabled = true;
-    saveKeyBtn.textContent = "Verifying key...";
+    saveKeyBtn.textContent = "VERIFYING...";
     setupStatus.className = "status-msg";
     setupStatus.textContent = "";
 
@@ -183,7 +203,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       setupStatus.textContent = "Connection error.";
     } finally {
       saveKeyBtn.disabled = false;
-      saveKeyBtn.textContent = "Save Key";
+      saveKeyBtn.textContent = "SAVE KEY";
     }
   });
 
@@ -255,7 +275,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   // Remove allowed domain
   allowedTags?.addEventListener("click", async (e) => {
-    if (e.target.classList.contains("tag-remove")) {
+    if (e.target.classList.contains("tag-del")) {
       const toRemove = e.target.getAttribute("data-domain");
       const { whitelistDomains = [] } = await api.storage.local.get("whitelistDomains");
       const updated = whitelistDomains.filter(d => d !== toRemove);
