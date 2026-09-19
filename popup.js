@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     setupView.style.display = "block";
     mainView.style.display = "none";
     statusBadge.className = "status-pill paused";
-    statusBadge.innerHTML = '<span class="indicator"></span><span>未設定 SETUP</span>';
+    statusBadge.innerHTML = '<span class="indicator"></span><span>SETUP</span>';
     apiKeyInput.focus();
   }
 
@@ -46,10 +46,10 @@ document.addEventListener("DOMContentLoaded", async () => {
   function updateStatusBadge(isActive) {
     if (isActive) {
       statusBadge.className = "status-pill active";
-      statusBadge.innerHTML = '<span class="indicator"></span><span>監視中 ACTIVE</span>';
+      statusBadge.innerHTML = '<span class="indicator"></span><span>ACTIVE</span>';
     } else {
       statusBadge.className = "status-pill paused";
-      statusBadge.innerHTML = '<span class="indicator"></span><span>休止 PAUSED</span>';
+      statusBadge.innerHTML = '<span class="indicator"></span><span>PAUSED</span>';
     }
   }
 
@@ -66,7 +66,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   function renderDomainTags(domains = []) {
     allowedTags.innerHTML = "";
     if (domains.length === 0) {
-      allowedTags.innerHTML = '<span style="font-size: 11px; font-family: monospace; color: var(--text-dark); font-style: italic;">// NO CUSTOM SANCTUARY DOMAINS</span>';
+      allowedTags.innerHTML = '<span style="font-size: 11px; font-family: monospace; color: var(--text-dark); font-style: italic;">No custom domains added</span>';
       return;
     }
 
@@ -85,7 +85,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   function renderGraveyard(items = []) {
     graveyardList.innerHTML = "";
     if (items.length === 0) {
-      graveyardList.innerHTML = '<div class="empty-state">// NO DISTRACTIONS SLAIN YET. DISCIPLINE MAINTAINED.</div>';
+      graveyardList.innerHTML = '<div class="empty-state">No closed tabs.</div>';
       return;
     }
 
@@ -157,7 +157,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     saveKeyBtn.disabled = true;
-    saveKeyBtn.textContent = "COMMUNING WITH JEV...";
+    saveKeyBtn.textContent = "VERIFYING KEY...";
     setupStatus.className = "status-msg";
     setupStatus.textContent = "";
 
@@ -170,20 +170,20 @@ document.addEventListener("DOMContentLoaded", async () => {
       if (response && response.success) {
         await api.storage.local.set({ typesafeApiKey: key });
         setupStatus.className = "status-msg ok";
-        setupStatus.textContent = "✓ JEV CORE CONNECTED & AUTHENTICATED.";
+        setupStatus.textContent = "API key saved.";
         setTimeout(() => {
           showMain(monitoringToggle.checked);
-        }, 600);
+        }, 500);
       } else {
         setupStatus.className = "status-msg error";
-        setupStatus.textContent = `[!] ${response?.error || "Invalid TypeSafe key. Check console.typesafe.ai."}`;
+        setupStatus.textContent = response?.error || "Invalid TypeSafe key.";
       }
     } catch (err) {
       setupStatus.className = "status-msg error";
-      setupStatus.textContent = "[!] Engine communication error.";
+      setupStatus.textContent = "Connection error.";
     } finally {
       saveKeyBtn.disabled = false;
-      saveKeyBtn.textContent = "AUTHENTICATE KEY";
+      saveKeyBtn.textContent = "SAVE KEY";
     }
   });
 
@@ -208,21 +208,21 @@ document.addEventListener("DOMContentLoaded", async () => {
     const prompt = workPromptInput.value.trim();
     if (!prompt) {
       goalStatus.className = "status-msg error";
-      goalStatus.textContent = "[!] Focus mission cannot be empty.";
+      goalStatus.textContent = "Prompt cannot be empty.";
       return;
     }
 
     try {
       await api.storage.local.set({ workPrompt: prompt });
       goalStatus.className = "status-msg ok";
-      goalStatus.textContent = "✓ MISSION UPDATED // JEV PATROLLING ACTIVE TABS";
+      goalStatus.textContent = "Work prompt updated.";
       api.runtime.sendMessage({ action: "TRIGGER_EVALUATION" }).catch(() => {});
       setTimeout(() => {
         goalStatus.style.display = "none";
-      }, 3500);
+      }, 3000);
     } catch (err) {
       goalStatus.className = "status-msg error";
-      goalStatus.textContent = "[!] Failed to update mission.";
+      goalStatus.textContent = "Failed to save prompt.";
     }
   });
 

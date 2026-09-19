@@ -190,14 +190,11 @@ async function injectWarningBanner(tabId, workGoal, graceSeconds = 5) {
         let remaining = seconds;
         banner.innerHTML = `
           <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; border-bottom: 1px solid rgba(168, 85, 247, 0.3); padding-bottom: 6px;">
-            <div style="display: flex; align-items: center; gap: 8px;">
-              <span style="font-size: 13px; color: #c084fc; font-weight: 900;">斬</span>
-              <strong style="font-size: 12px; color: #fdfbf7; letter-spacing: 1px; text-transform: uppercase; font-family: monospace;">OVERWATCH // FOCUS BREACH</strong>
-            </div>
+            <strong style="font-size: 12px; color: #fdfbf7; letter-spacing: 1px; text-transform: uppercase; font-family: monospace;">OVERWATCH</strong>
             <span id="overwatch-countdown" style="font-weight: 900; color: #c084fc; font-size: 14px; font-family: monospace; text-shadow: 0 0 8px #a855f7;">${remaining}s</span>
           </div>
           <p style="margin: 0 0 6px 0; font-size: 12px; color: #998eb0;">
-            Target tab is off-topic from your active mission:
+            This page doesn't look related to:
           </p>
           <div style="background: rgba(168, 85, 247, 0.1); border-left: 2px solid #a855f7; padding: 6px 10px; font-size: 11.5px; color: #e9d5ff; margin-bottom: 12px; font-weight: 600; word-break: break-word; font-family: monospace;">
             "${goalText.replace(/</g, "&lt;")}"
@@ -213,7 +210,7 @@ async function injectWarningBanner(tabId, workGoal, graceSeconds = 5) {
               letter-spacing: 1px;
               cursor: pointer;
               clip-path: polygon(4px 0, 100% 0, calc(100% - 4px) 100%, 0 100%);
-            ">護 KEEP TAB</button>
+            ">KEEP TAB</button>
             <button id="overwatch-close-btn" style="
               background: linear-gradient(135deg, #9333ea, #a855f7);
               color: #fdfbf7;
@@ -225,7 +222,7 @@ async function injectWarningBanner(tabId, workGoal, graceSeconds = 5) {
               cursor: pointer;
               box-shadow: 0 0 12px rgba(168, 85, 247, 0.4);
               clip-path: polygon(4px 0, 100% 0, calc(100% - 4px) 100%, 0 100%);
-            ">斬 SEVER NOW</button>
+            ">CLOSE NOW</button>
           </div>
         `;
 

@@ -574,12 +574,12 @@
           </div>
           <div class="title-area">
             <h1>OVERWATCH <span class="kanji-badge">監視</span></h1>
-            <div class="sub">// JEV SYSTEM ONE ENGINE</div>
+            <div class="sub">// JEV TAB FILTER</div>
           </div>
         </div>
         <div id="statusBadge" class="status-pill active">
           <span class="indicator"></span>
-          <span>監視中 ACTIVE</span>
+          <span>ACTIVE</span>
         </div>
       </div>
 
@@ -587,12 +587,12 @@
       <div id="setup-view" class="manga-panel">
         <div class="panel-label">
           <span class="glyph">❖</span>
-          <span>INITIALIZE // API KEY REGISTRATION</span>
+          <span>TYPESAFE API KEY</span>
         </div>
         <p style="font-size: 12px; color: var(--text-dim); margin: 6px 0 12px 0; line-height: 1.45;">
-          Connect to <strong>TypeSafe Jev</strong>. Evaluates incoming tabs in sub-200ms with typed decision primitives.
+          Enter your TypeSafe API key to enable tab monitoring with Jev.
         </p>
-        <label for="apiKey">[ 鍵 ] TYPESAFE API KEY</label>
+        <label for="apiKey">API KEY</label>
         <input
           id="apiKey"
           type="password"
@@ -600,10 +600,10 @@
           autocomplete="off"
         />
         <p style="font-size: 11px; font-family: monospace; color: var(--text-dim); margin: 8px 0 14px 0;">
-          OBTAIN ACCESS KEY AT <a href="https://console.typesafe.ai/keys" target="_blank" rel="noopener noreferrer">CONSOLE.TYPESAFE.AI ↗</a>
+          GET A KEY AT <a href="https://console.typesafe.ai/keys" target="_blank" rel="noopener noreferrer">CONSOLE.TYPESAFE.AI ↗</a>
         </p>
         <div style="display: flex; gap: 8px;">
-          <button id="saveKeyBtn" class="btn btn-primary" style="flex: 1;">AUTHENTICATE KEY</button>
+          <button id="saveKeyBtn" class="btn btn-primary" style="flex: 1;">SAVE KEY</button>
           <button id="openConsoleBtn" class="btn btn-secondary">CONSOLE</button>
         </div>
         <div id="setupStatus" class="status-msg"></div>
@@ -616,78 +616,78 @@
           <div class="panel-header">
             <div class="panel-label">
               <span class="glyph">⚔</span>
-              <span>ACTIVE FOCUS MISSION // 集中目標</span>
+              <span>CURRENT WORK PROMPT</span>
             </div>
-            <label class="switch" title="Toggle Monitoring Protocol">
+            <label class="switch" title="Toggle Monitoring">
               <input id="monitoringToggle" type="checkbox" checked />
               <span class="slider"></span>
             </label>
           </div>
           <textarea
             id="workPrompt"
-            placeholder="Define your coding mission: e.g. Implementing auth middleware in Go using JWT"
+            placeholder="e.g. Building an auth service in Go"
           ></textarea>
           <div style="display: flex; justify-content: flex-end; margin-top: 8px;">
-            <button id="savePromptBtn" class="btn btn-primary btn-sm">UPDATE MISSION</button>
+            <button id="savePromptBtn" class="btn btn-primary btn-sm">UPDATE PROMPT</button>
           </div>
           <div id="goalStatus" class="status-msg"></div>
         </div>
 
-        <!-- Protocol Mode -->
+        <!-- Mode -->
         <div class="manga-panel">
           <div style="display: flex; align-items: center; justify-content: space-between;">
             <div>
               <div class="panel-label" style="margin-bottom: 2px;">
                 <span class="glyph">⚡</span>
-                <span>INTERVENTION PROTOCOL</span>
+                <span>ON DISTRACTION</span>
               </div>
-              <span style="font-size: 10.5px; font-family: monospace; color: var(--text-dim);">RESPONSE ACTION ON DISTRACTION</span>
+              <span style="font-size: 10.5px; font-family: monospace; color: var(--text-dim);">HOW TO HANDLE UNRELATED TABS</span>
             </div>
             <select id="enforcementSelect" style="width: auto; padding: 6px 10px; font-size: 11px;">
-              <option value="grace">5S GRACE WARNING</option>
-              <option value="instant">INSTANT SEVER (CLOSE)</option>
+              <option value="grace">5S WARNING</option>
+              <option value="instant">CLOSE IMMEDIATELY</option>
             </select>
           </div>
         </div>
 
-        <!-- Allowed Domains / Sanctuary -->
+        <!-- Allowed Domains -->
         <div class="manga-panel">
           <div class="panel-label">
             <span class="glyph">🛡</span>
-            <span>SANCTUARY DOMAINS // 許容領域</span>
+            <span>ALLOWED DOMAINS</span>
           </div>
           <div style="display: flex; gap: 8px; margin-top: 6px;">
             <input
               id="newDomainInput"
               type="text"
-              placeholder="e.g. youtube.com, twitch.tv"
+              placeholder="e.g. youtube.com"
               style="flex: 1;"
             />
-            <button id="addDomainBtn" class="btn btn-secondary btn-sm">ALLOW</button>
+            <button id="addDomainBtn" class="btn btn-secondary btn-sm">ADD</button>
           </div>
           <div id="allowedTags" class="tag-container">
             <!-- Dynamically populated -->
           </div>
         </div>
 
-        <!-- Tab Graveyard (Slain Tabs) -->
+        <!-- Closed Tabs -->
         <div class="manga-panel">
           <div class="panel-header">
             <div class="panel-label">
               <span class="glyph">斬</span>
-              <span>SLAIN DISTRACTIONS // 討滅録</span>
+              <span>CLOSED TABS</span>
             </div>
-            <button id="clearGraveyardBtn" class="btn btn-secondary btn-sm" style="font-size: 9.5px; padding: 2px 8px;">PURGE</button>
+            <button id="clearGraveyardBtn" class="btn btn-secondary btn-sm" style="font-size: 9.5px; padding: 2px 8px;">CLEAR</button>
           </div>
           <div id="graveyardList" class="graveyard-list">
-            <div class="empty-state">// NO DISTRACTIONS SLAIN YET. DISCIPLINE MAINTAINED.</div>
+            <div class="empty-state">No closed tabs.</div>
           </div>
         </div>
 
         <!-- Footer -->
         <div class="footer">
           <span>POWERED BY <strong>JEV</strong> // TYPESAFE AI</span>
-          <a id="changeKeyBtn" href="#">API KEY CONFIG</a>
+          <a id="changeKeyBtn" href="#">API KEY</a>
         </div>
       </div>
     </div>

@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Overwatch AI",
   "version": "2.0.0",
-  "description": "AI-powered tab distraction blocker powered by TypeSafe Jev System One model.",
+  "description": "Closes distracting tabs unrelated to your current coding prompt using Jev.",
   "browser_specific_settings": {
     "gecko": {
       "id": "overwatch-ai@linuxer77.github.io",
