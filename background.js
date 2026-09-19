@@ -564,8 +564,11 @@ api.runtime.onMessage.addListener((message, sender, sendResponse) => {
   }
 });
 
-// Initial startup evaluation
+// Initial startup evaluation & legacy key cleanup
 api.runtime.onInstalled.addListener(() => {
+  // Purge any legacy keys from previous versions
+  api.storage.local.remove(["togetherApiKey", "togetherKey"]).catch(() => {});
+
   api.storage.local.get(["typesafeApiKey", "workPrompt"]).then(({ typesafeApiKey, workPrompt }) => {
     if (!typesafeApiKey) {
       const url = api.runtime.getURL("popup.html");

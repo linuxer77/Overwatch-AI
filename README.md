@@ -9,7 +9,7 @@ Powered by **TypeSafe AI's [Jev System One Model](https://typesafe.ai/blog/intro
 ## ⚡ What Changed in v2.0 (Powered by Jev AI)
 
 1. **Sub-200ms Decision Engine (Jev AI)**:
-   - Migrated from slow chat completions (`DeepSeek-V3`, ~3–5s latency) to TypeSafe AI's **Jev** System One model (~70–180ms response time).
+   - Powered exclusively by TypeSafe AI's **Jev** System One model (~70–180ms response time).
    - Fast enough to evaluate tabs the millisecond they load without lagging your browser.
 2. **Type-Safe Probabilities & Zero Hallucinations**:
    - Replaced fragile regex parsing (`text.match(/"relevance": .../)`) with Jev's typed primitives (`choice` and `noul`).
