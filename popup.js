@@ -105,7 +105,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             <span>${formatTimeAgo(item.closedAt)}</span>
           </div>
         </div>
-        <button class="theme-outline-btn theme-outline-btn-sm restore-btn" data-url="${item.url}" title="Reopen this tab">RESTORE</button>
+        <button class="btn btn-white btn-sm restore-btn" data-url="${item.url}" title="Reopen this tab">RESTORE</button>
       `;
       graveyardList.appendChild(row);
     });
@@ -126,7 +126,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         enforcementMode = "grace",
         whitelistDomains = [],
         recentlyClosed = [],
-        colorTheme = "purple"
+        colorTheme = "crimson"
       } = await api.storage.local.get([
         "typesafeApiKey",
         "workPrompt",

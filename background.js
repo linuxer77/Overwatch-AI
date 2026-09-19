@@ -175,13 +175,13 @@ async function injectWarningBanner(tabId, workGoal, graceSeconds = 5) {
           top: 20px !important;
           right: 20px !important;
           z-index: 2147483647 !important;
-          background: #fcfbf9 !important;
-          color: #111015 !important;
-          border: 2px solid #111015 !important;
-          border-radius: 2px !important;
+          background: #f4eedb !important;
+          color: #141216 !important;
+          border: 2px solid #141216 !important;
+          border-radius: 6px !important;
           padding: 16px 18px !important;
-          font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif !important;
-          box-shadow: 4px 4px 0px #111015 !important;
+          font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif !important;
+          box-shadow: 4px 4px 0px #141216 !important;
           max-width: 360px !important;
           line-height: 1.45 !important;
           transition: all 0.2s ease !important;
@@ -189,39 +189,41 @@ async function injectWarningBanner(tabId, workGoal, graceSeconds = 5) {
 
         let remaining = seconds;
         banner.innerHTML = `
-          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; border-bottom: 1.5px solid #111015; padding-bottom: 6px;">
-            <strong style="font-size: 13px; color: #111015; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase;">OVERWATCH</strong>
-            <span id="overwatch-countdown" style="font-weight: 700; color: #dc2626; font-size: 12px; letter-spacing: 1px; text-transform: uppercase;">CLOSING IN ${remaining}S</span>
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; border-bottom: 2px solid #141216; padding-bottom: 6px;">
+            <strong style="font-size: 13px; color: #141216; font-weight: 900; letter-spacing: 1.5px; text-transform: uppercase;">OVERWATCH</strong>
+            <span id="overwatch-countdown" style="font-weight: 800; color: #dc1419; font-size: 12px; letter-spacing: 1px; text-transform: uppercase;">CLOSING IN ${remaining}S</span>
           </div>
-          <p style="margin: 0 0 6px 0; font-size: 12px; color: #6b6875;">
-            This page doesn't look related to:
+          <p style="margin: 0 0 6px 0; font-size: 12px; font-weight: 500; color: #6e675f;">
+            This page is off-topic from your current goal:
           </p>
-          <div style="background: #ffffff; border: 1.5px solid #111015; border-radius: 2px; padding: 6px 10px; font-size: 12px; color: #111015; margin-bottom: 12px; font-weight: 600; word-break: break-word;">
+          <div style="background: #ffffff; border: 2px solid #141216; border-radius: 4px; padding: 7px 10px; font-size: 12px; color: #141216; margin-bottom: 12px; font-weight: 700; word-break: break-word;">
             "${goalText.replace(/</g, "&lt;")}"
           </div>
           <div style="display: flex; gap: 8px; justify-content: flex-end;">
             <button id="overwatch-keep-btn" style="
               background: #ffffff;
-              color: #111015;
-              border: 1.5px solid #111015;
-              border-radius: 2px;
+              color: #141216;
+              border: 2px solid #141216;
+              border-radius: 4px;
               padding: 6px 12px;
               font-size: 11px;
-              font-weight: 700;
+              font-weight: 800;
               letter-spacing: 1px;
               text-transform: uppercase;
+              box-shadow: 2px 2px 0px #141216;
               cursor: pointer;
             ">KEEP TAB</button>
             <button id="overwatch-close-btn" style="
-              background: #111015;
+              background: #141216;
               color: #ffffff;
-              border: 1.5px solid #111015;
-              border-radius: 2px;
+              border: 2px solid #141216;
+              border-radius: 4px;
               padding: 6px 12px;
               font-size: 11px;
-              font-weight: 700;
+              font-weight: 800;
               letter-spacing: 1px;
               text-transform: uppercase;
+              box-shadow: 2px 2px 0px #141216;
               cursor: pointer;
             ">CLOSE NOW</button>
           </div>

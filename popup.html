@@ -1,198 +1,334 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="purple">
+<html lang="en" data-theme="crimson">
   <head>
     <meta charset="utf-8" />
     <title>Overwatch</title>
     <style>
       :root {
-        --paper-white: #fcfbf9;
-        --ink-black: #111015;
-        --ink-muted: #6b6875;
-        --border-dark: #111015;
-        --mint-cloud: #2dd4bf;
-        --coral-wireframe: #e11d48;
+        /* Canvas & Paper Colors from Reference Image */
+        --bg-parchment: #f4eedb;
+        --bg-card: #fbf8f0;
+        --bg-input: #ffffff;
+        
+        /* Ink & Line Colors */
+        --ink-primary: #141216;
+        --ink-muted: #6e675f;
+        --ink-border: #141216;
+        
+        /* Accent Colors (Default Crimson from Reference Art) */
+        --accent: #dc1419;
+        --accent-hover: #b91014;
+        --accent-soft: rgba(220, 20, 25, 0.1);
+        --accent-text: #ffffff;
 
-        /* Saturated Block Theme Colors */
-        --theme-block: #6b21a8;
-        --theme-block-dark: #220638;
-        --theme-block-surface: rgba(255, 255, 255, 0.1);
-        --theme-block-border: rgba(255, 255, 255, 0.35);
-        --text-on-theme: #ffffff;
-        --text-on-theme-dim: rgba(255, 255, 255, 0.75);
+        /* Mountain Beige from Art */
+        --art-mountain: #dfccae;
+        --art-mountain-dark: #c2b090;
+
+        /* Cartoon Tactile Shadows */
+        --shadow-block: 3px 3px 0px var(--ink-border);
+        --shadow-button: 2px 2px 0px var(--ink-border);
+        --shadow-button-pressed: 0px 0px 0px var(--ink-border);
+        --border-thick: 2px solid var(--ink-border);
+        --border-thin: 1.5px solid var(--ink-border);
       }
 
-      /* Crimson palette option (Exact image match) */
+      /* Purple Theme Option */
       [data-theme="purple"] {
-        --theme-block: #dc2626;
-        --theme-block-dark: #3a0808;
-        --theme-block-surface: rgba(0, 0, 0, 0.18);
-        --theme-block-border: rgba(255, 255, 255, 0.4);
+        --accent: #7c2d12;
+        --accent: #7e22ce;
+        --accent-hover: #6b21a8;
+        --accent-soft: rgba(126, 34, 206, 0.12);
+      }
+
+      * {
+        box-sizing: border-box;
       }
 
       html, body {
-        height: 100%;
         margin: 0;
         padding: 0;
       }
 
       body {
-        width: 410px;
-        min-height: 540px;
-        background-color: var(--paper-white);
-        font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Arial", sans-serif;
-        color: var(--ink-black);
-        overflow-x: hidden;
+        width: 390px;
+        min-height: 550px;
+        background-color: var(--bg-parchment);
+        font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        color: var(--ink-primary);
+        padding: 14px 16px 16px 16px;
         user-select: none;
-        display: flex;
-        flex-direction: column;
+        overflow-x: hidden;
       }
 
       /* -------------------------------------------------------------
-         TOP HALF: Pristine Ivory White Canvas (Swiss / Constructivist)
+         HEADER BAR
          ------------------------------------------------------------- */
-      .top-section {
-        background-color: var(--paper-white);
-        padding: 16px 18px 14px 18px;
-        position: relative;
-        flex-shrink: 0;
-      }
-
-      .header {
+      .header-bar {
         display: flex;
         align-items: center;
         justify-content: space-between;
         margin-bottom: 12px;
       }
 
-      .brand-wrap {
+      .brand-group {
         display: flex;
         align-items: center;
-        gap: 12px;
+        gap: 10px;
       }
 
-      /* Hero Geometric Art Icon */
-      .art-hero-icon {
-        width: 42px;
-        height: 42px;
-        border: 1.5px solid var(--border-dark);
-        border-radius: 4px;
+      .brand-icon {
+        width: 38px;
+        height: 38px;
+        border: var(--border-thick);
+        border-radius: 6px;
         overflow: hidden;
         background: #ffffff;
-        box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.15);
+        box-shadow: var(--shadow-button);
+        flex-shrink: 0;
       }
 
-      .art-hero-icon img {
+      .brand-icon img {
         width: 100%;
         height: 100%;
         display: block;
+        object-fit: cover;
       }
 
-      .title-group h1 {
+      .brand-text h1 {
         margin: 0;
-        font-size: 17px;
-        font-weight: 800;
-        letter-spacing: 2.5px;
+        font-size: 16px;
+        font-weight: 900;
+        letter-spacing: 2px;
         text-transform: uppercase;
-        color: var(--ink-black);
+        color: var(--ink-primary);
+        line-height: 1.1;
       }
 
-      .title-group p {
-        margin: 1px 0 0 0;
+      .brand-text p {
+        margin: 2px 0 0 0;
         font-size: 10px;
-        font-weight: 600;
-        letter-spacing: 1px;
+        font-weight: 700;
+        letter-spacing: 0.8px;
         text-transform: uppercase;
         color: var(--ink-muted);
       }
 
-      /* Minimalist Swiss Stamp Status Pill */
+      /* Status Badge */
       .status-stamp {
-        font-size: 10px;
-        font-weight: 700;
-        letter-spacing: 1.5px;
+        font-size: 10.5px;
+        font-weight: 800;
+        letter-spacing: 1.2px;
         text-transform: uppercase;
         padding: 4px 9px;
-        border: 1.5px solid var(--border-dark);
-        border-radius: 2px;
+        border: var(--border-thick);
+        border-radius: 4px;
         background: #ffffff;
         display: flex;
         align-items: center;
         gap: 6px;
-        box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.1);
+        box-shadow: var(--shadow-button);
       }
 
       .status-stamp.active {
-        color: var(--ink-black);
+        color: var(--ink-primary);
       }
 
       .status-stamp.active .dot {
-        width: 6px;
-        height: 6px;
+        width: 7px;
+        height: 7px;
         border-radius: 50%;
-        background: #10b981;
+        background: #16a34a;
+        border: 1px solid var(--ink-primary);
       }
 
       .status-stamp.paused {
-        color: #ef4444;
+        color: var(--accent);
       }
 
       .status-stamp.paused .dot {
-        width: 6px;
-        height: 6px;
+        width: 7px;
+        height: 7px;
         border-radius: 50%;
-        background: #ef4444;
+        background: var(--accent);
+        border: 1px solid var(--ink-primary);
       }
 
-      /* Top Section Card / Input */
-      .input-block-label {
-        font-size: 10.5px;
-        font-weight: 700;
-        letter-spacing: 1.5px;
-        text-transform: uppercase;
-        color: var(--ink-black);
-        margin-bottom: 6px;
+      /* -------------------------------------------------------------
+         HERO CARTOON ART BANNER
+         ------------------------------------------------------------- */
+      .hero-card {
+        width: 100%;
+        height: 130px;
+        border: var(--border-thick);
+        border-radius: 6px;
+        overflow: hidden;
+        background: #ffffff;
+        box-shadow: var(--shadow-block);
+        margin-bottom: 12px;
+        position: relative;
+      }
+
+      .hero-card img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: 50% 47%;
+        display: block;
+      }
+
+      /* -------------------------------------------------------------
+         CARTOON CARDS
+         ------------------------------------------------------------- */
+      .card {
+        background: var(--bg-card);
+        border: var(--border-thick);
+        border-radius: 6px;
+        box-shadow: var(--shadow-block);
+        padding: 12px 14px;
+        margin-bottom: 12px;
+      }
+
+      .card-header {
         display: flex;
-        justify-content: space-between;
         align-items: center;
+        justify-content: space-between;
+        margin-bottom: 8px;
       }
 
+      .card-title {
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 1.2px;
+        text-transform: uppercase;
+        color: var(--ink-primary);
+      }
+
+      /* -------------------------------------------------------------
+         FORM ELEMENTS & INPUTS
+         ------------------------------------------------------------- */
       textarea {
         width: 100%;
         padding: 9px 11px;
         font-size: 13px;
-        color: var(--ink-black);
-        background: #ffffff;
-        border: 1.5px solid var(--border-dark);
-        border-radius: 3px;
+        font-weight: 500;
+        color: var(--ink-primary);
+        background: var(--bg-input);
+        border: var(--border-thick);
+        border-radius: 4px;
         outline: none;
         resize: vertical;
         min-height: 52px;
-        line-height: 1.45;
+        line-height: 1.4;
         font-family: inherit;
-        box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.08);
-        transition: border-color 0.15s, box-shadow 0.15s;
+        transition: border-color 0.15s;
       }
 
       textarea:focus {
-        border-color: var(--coral-wireframe);
-        box-shadow: 3px 3px 0px var(--coral-wireframe);
+        border-color: var(--accent);
       }
 
-      .top-btn-row {
-        display: flex;
-        justify-content: space-between;
+      input[type="text"],
+      input[type="password"] {
+        padding: 7px 10px;
+        font-size: 12px;
+        font-weight: 500;
+        color: var(--ink-primary);
+        background: var(--bg-input);
+        border: var(--border-thick);
+        border-radius: 4px;
+        outline: none;
+        font-family: inherit;
+      }
+
+      input[type="text"]:focus,
+      input[type="password"]:focus {
+        border-color: var(--accent);
+      }
+
+      select {
+        appearance: none;
+        padding: 5px 24px 5px 10px;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+        color: var(--ink-primary);
+        background: #ffffff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0 L5 6 L10 0 Z' fill='%23141216'/%3E%3C/svg%3E") no-repeat calc(100% - 8px) center;
+        border: var(--border-thick);
+        border-radius: 4px;
+        outline: none;
+        cursor: pointer;
+      }
+
+      /* -------------------------------------------------------------
+         CARTOON TACTILE BUTTONS
+         ------------------------------------------------------------- */
+      .btn {
+        appearance: none;
+        border: var(--border-thick);
+        border-radius: 4px;
+        padding: 6px 12px;
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        cursor: pointer;
+        box-shadow: var(--shadow-button);
+        transition: transform 0.08s ease, box-shadow 0.08s ease;
+        display: inline-flex;
         align-items: center;
-        margin-top: 8px;
+        justify-content: center;
+        gap: 6px;
       }
 
-      /* Swiss Constructivist Minimalist Toggle */
-      .construct-toggle {
+      .btn:active:not(:disabled) {
+        transform: translate(2px, 2px);
+        box-shadow: var(--shadow-button-pressed);
+      }
+
+      .btn-primary {
+        background: var(--accent);
+        color: var(--accent-text);
+      }
+
+      .btn-primary:hover:not(:disabled) {
+        background: var(--accent-hover);
+      }
+
+      .btn-dark {
+        background: var(--ink-primary);
+        color: #ffffff;
+      }
+
+      .btn-dark:hover:not(:disabled) {
+        background: #2a262d;
+      }
+
+      .btn-white {
+        background: #ffffff;
+        color: var(--ink-primary);
+      }
+
+      .btn-white:hover:not(:disabled) {
+        background: #f5f2eb;
+      }
+
+      .btn-sm {
+        padding: 3px 8px;
+        font-size: 9.5px;
+      }
+
+      /* -------------------------------------------------------------
+         TOGGLE SWITCH
+         ------------------------------------------------------------- */
+      .toggle-wrap {
         display: flex;
         align-items: center;
         gap: 8px;
         font-size: 10px;
-        font-weight: 700;
-        letter-spacing: 1.2px;
+        font-weight: 800;
+        letter-spacing: 1px;
         text-transform: uppercase;
       }
 
@@ -200,7 +336,7 @@
         position: relative;
         display: inline-block;
         width: 36px;
-        height: 18px;
+        height: 20px;
       }
 
       .switch input {
@@ -216,10 +352,10 @@
         left: 0;
         right: 0;
         bottom: 0;
-        background-color: #d1d5db;
-        border: 1.5px solid var(--border-dark);
-        transition: 0.2s;
-        border-radius: 2px;
+        background-color: #d1cbbe;
+        border: var(--border-thick);
+        border-radius: 10px;
+        transition: 0.15s;
       }
 
       .slider:before {
@@ -227,203 +363,82 @@
         content: "";
         height: 10px;
         width: 10px;
-        left: 2px;
-        bottom: 2px;
-        background-color: var(--border-dark);
-        transition: 0.2s;
-        border-radius: 1px;
+        left: 3px;
+        bottom: 3px;
+        background-color: var(--ink-primary);
+        border-radius: 50%;
+        transition: 0.15s;
       }
 
       input:checked + .slider {
-        background-color: var(--border-dark);
+        background-color: var(--accent);
       }
 
       input:checked + .slider:before {
-        transform: translateX(18px);
+        transform: translateX(16px);
         background-color: #ffffff;
       }
 
-      /* Clean Black Block Button */
-      .block-btn {
-        appearance: none;
-        border: 1.5px solid var(--border-dark);
-        border-radius: 2px;
-        padding: 6px 13px;
-        font-size: 11px;
-        font-weight: 700;
-        letter-spacing: 1.5px;
-        text-transform: uppercase;
-        cursor: pointer;
-        background: var(--border-dark);
-        color: #ffffff;
-        box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.2);
-        transition: all 0.15s ease;
-      }
-
-      .block-btn:hover:not(:disabled) {
-        background: #ffffff;
-        color: var(--border-dark);
-      }
-
-      .block-btn:active {
-        transform: translate(1px, 1px);
-        box-shadow: 1px 1px 0px rgba(0, 0, 0, 0.2);
-      }
-
       /* -------------------------------------------------------------
-         THE HORIZON BISECTION (Razor-sharp line from the artwork)
+         TAG CLOUD (ALLOWED DOMAINS)
          ------------------------------------------------------------- */
-      .horizon-bisection {
-        width: 100%;
-        height: 2px;
-        background-color: var(--border-dark);
-        position: relative;
-        z-index: 2;
-      }
-
-      /* -------------------------------------------------------------
-         BOTTOM HALF: Saturated Color Field (Bauhaus Purple / Crimson)
-         ------------------------------------------------------------- */
-      .bottom-section {
-        background-color: var(--theme-block);
-        color: var(--text-on-theme);
-        padding: 14px 18px 16px 18px;
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        position: relative;
-        transition: background-color 0.3s ease;
-      }
-
-      /* Minimalist Saturated Cards */
-      .theme-card {
-        background: var(--theme-block-surface);
-        border: 1.5px solid var(--theme-block-border);
-        border-radius: 3px;
-        padding: 10px 12px;
-        margin-bottom: 10px;
-      }
-
-      .theme-card-header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        margin-bottom: 6px;
-      }
-
-      .theme-label {
-        font-size: 10px;
-        font-weight: 700;
-        letter-spacing: 1.5px;
-        text-transform: uppercase;
-        color: var(--text-on-theme);
-      }
-
-      /* Clean Saturated Inputs */
-      .theme-card input[type="text"],
-      .theme-card select {
-        width: 100%;
-        padding: 7px 10px;
-        font-size: 12px;
-        color: #ffffff;
-        background: rgba(0, 0, 0, 0.25);
-        border: 1.5px solid var(--theme-block-border);
-        border-radius: 2px;
-        outline: none;
-        font-family: inherit;
-        box-sizing: border-box;
-      }
-
-      .theme-card select option {
-        background: #2a0845;
-        color: #ffffff;
-      }
-
-      .theme-card input:focus,
-      .theme-card select:focus {
-        border-color: #ffffff;
-        background: rgba(0, 0, 0, 0.4);
-      }
-
-      /* White Outline Button */
-      .theme-outline-btn {
-        appearance: none;
-        border: 1.5px solid #ffffff;
-        border-radius: 2px;
-        padding: 6px 12px;
-        font-size: 10px;
-        font-weight: 700;
-        letter-spacing: 1.5px;
-        text-transform: uppercase;
-        cursor: pointer;
-        background: transparent;
-        color: #ffffff;
-        transition: all 0.15s ease;
-      }
-
-      .theme-outline-btn:hover:not(:disabled) {
-        background: #ffffff;
-        color: var(--theme-block);
-      }
-
-      .theme-outline-btn-sm {
-        padding: 3px 8px;
-        font-size: 9px;
-      }
-
-      /* Tags */
       .tag-cloud {
         display: flex;
         flex-wrap: wrap;
-        gap: 5px;
-        margin-top: 6px;
-        max-height: 60px;
+        gap: 6px;
+        margin-top: 8px;
+        max-height: 70px;
         overflow-y: auto;
       }
 
       .tag-item {
-        background: rgba(255, 255, 255, 0.15);
-        border: 1px solid rgba(255, 255, 255, 0.3);
-        border-radius: 2px;
-        padding: 2px 7px;
-        font-size: 10.5px;
-        color: #ffffff;
+        background: #ffffff;
+        border: var(--border-thin);
+        border-radius: 3px;
+        padding: 3px 7px;
+        font-size: 11px;
+        font-weight: 700;
+        color: var(--ink-primary);
         display: inline-flex;
         align-items: center;
-        gap: 5px;
+        gap: 6px;
+        box-shadow: 1px 1px 0px var(--ink-border);
       }
 
       .tag-del {
         cursor: pointer;
-        font-weight: bold;
-        opacity: 0.7;
+        font-weight: 900;
+        color: var(--ink-muted);
+        font-size: 13px;
+        line-height: 1;
       }
 
       .tag-del:hover {
-        opacity: 1;
-        color: #fca5a5;
+        color: var(--accent);
       }
 
-      /* Closed tabs list */
+      /* -------------------------------------------------------------
+         GRAVEYARD (CLOSED TABS)
+         ------------------------------------------------------------- */
       .closed-list {
         display: flex;
         flex-direction: column;
-        gap: 5px;
-        max-height: 100px;
+        gap: 6px;
+        max-height: 110px;
         overflow-y: auto;
         margin-top: 4px;
       }
 
       .closed-item {
-        background: rgba(0, 0, 0, 0.2);
-        border: 1px solid var(--theme-block-border);
-        border-radius: 2px;
+        background: #ffffff;
+        border: var(--border-thin);
+        border-radius: 4px;
         padding: 6px 9px;
         display: flex;
         align-items: center;
         justify-content: space-between;
         gap: 8px;
+        box-shadow: 1px 1px 0px var(--ink-border);
       }
 
       .closed-info {
@@ -432,136 +447,151 @@
       }
 
       .closed-title {
-        font-size: 11px;
-        font-weight: 500;
+        font-size: 11.5px;
+        font-weight: 600;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
-        color: #ffffff;
+        color: var(--ink-primary);
       }
 
       .closed-meta {
-        font-size: 9.5px;
-        color: var(--text-on-theme-dim);
+        font-size: 10px;
+        color: var(--ink-muted);
+        margin-top: 1px;
       }
 
       .empty-state {
         text-align: center;
         font-size: 11px;
-        color: var(--text-on-theme-dim);
-        padding: 8px 0;
-        letter-spacing: 0.5px;
+        font-weight: 600;
+        color: var(--ink-muted);
+        padding: 10px 0;
       }
 
       .status-msg {
         font-size: 11px;
-        font-weight: 600;
+        font-weight: 700;
         margin-top: 6px;
         display: none;
       }
 
       .status-msg.ok {
         display: block;
-        color: #10b981;
+        color: #16a34a;
       }
 
       .status-msg.error {
         display: block;
-        color: #ef4444;
+        color: var(--accent);
       }
 
-      /* Footer */
+      /* -------------------------------------------------------------
+         FOOTER
+         ------------------------------------------------------------- */
       .footer {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        font-size: 9.5px;
-        font-weight: 600;
-        letter-spacing: 1.2px;
+        font-size: 10px;
+        font-weight: 800;
+        letter-spacing: 1px;
         text-transform: uppercase;
-        color: var(--text-on-theme-dim);
-        margin-top: 10px;
-        padding-top: 8px;
-        border-top: 1px solid var(--theme-block-border);
+        color: var(--ink-muted);
+        margin-top: 14px;
+        padding-top: 10px;
+        border-top: var(--border-thick);
       }
 
       .footer a {
-        color: #ffffff;
+        color: var(--ink-primary);
         text-decoration: underline;
+        cursor: pointer;
       }
 
-      /* Palette Switcher Dots */
       .palette-toggle {
         display: flex;
-        gap: 6px;
+        gap: 8px;
         align-items: center;
       }
 
       .dot-btn {
-        width: 10px;
-        height: 10px;
+        width: 14px;
+        height: 14px;
         border-radius: 50%;
-        border: 1px solid #ffffff;
+        border: 2px solid var(--ink-border);
         cursor: pointer;
         padding: 0;
+        box-shadow: 1px 1px 0px var(--ink-border);
+        transition: transform 0.1s;
       }
 
-      .dot-purple { background: #6b21a8; }
-      .dot-crimson { background: #dc2626; }
+      .dot-btn:active {
+        transform: scale(0.9);
+      }
 
-      /* Setup view card */
+      .dot-crimson { background: #dc1419; }
+      .dot-purple { background: #7e22ce; }
+
       #setup-view {
         display: none;
       }
     </style>
   </head>
   <body>
-    <!-- TOP SECTION: Crisp White Canvas -->
-    <div class="top-section">
-      <!-- Header -->
-      <div class="header">
-        <div class="brand-wrap">
-          <div class="art-hero-icon">
-            <img src="assets/logo.svg" alt="Overwatch Graphic Artwork" />
-          </div>
-          <div class="title-group">
-            <h1>OVERWATCH</h1>
-            <p>JEV TAB FILTER // SYSTEM ONE</p>
-          </div>
+    <!-- Header -->
+    <div class="header-bar">
+      <div class="brand-group">
+        <div class="brand-icon">
+          <img src="assets/logo.svg" alt="Overwatch Icon" />
         </div>
-        <div id="statusBadge" class="status-stamp active">
-          <span class="dot"></span>
-          <span>ACTIVE</span>
+        <div class="brand-text">
+          <h1>OVERWATCH</h1>
+          <p>System One Tab Filter</p>
         </div>
       </div>
-
-      <!-- Setup View (When API Key is missing) -->
-      <div id="setup-view">
-        <div class="input-block-label">TYPESAFE API KEY</div>
-        <input
-          id="apiKey"
-          type="password"
-          placeholder="ts_live_..."
-          autocomplete="off"
-          style="width: 100%; padding: 8px 10px; font-size: 12px; border: 1.5px solid var(--border-dark); border-radius: 2px; outline: none; margin-bottom: 8px;"
-        />
-        <div style="display: flex; justify-content: space-between; align-items: center;">
-          <span style="font-size: 10px; color: var(--ink-muted);">KEY FROM CONSOLE.TYPESAFE.AI</span>
-          <div style="display: flex; gap: 6px;">
-            <button id="saveKeyBtn" class="block-btn">SAVE KEY</button>
-            <button id="openConsoleBtn" class="block-btn" style="background: #ffffff; color: #111;">CONSOLE</button>
-          </div>
-        </div>
-        <div id="setupStatus" class="status-msg"></div>
+      <div id="statusBadge" class="status-stamp active">
+        <span class="dot"></span>
+        <span>ACTIVE</span>
       </div>
+    </div>
 
-      <!-- Main Focus Prompt (Top Canvas) -->
-      <div id="prompt-panel">
-        <div class="input-block-label">
-          <span>CURRENT WORK PROMPT</span>
-          <div class="construct-toggle">
+    <!-- Hero Cartoon Art Banner -->
+    <div class="hero-card">
+      <img src="assets/art.svg" alt="Overwatch Sentinel on Mountain Summit" />
+    </div>
+
+    <!-- Setup View (When API Key is missing) -->
+    <div id="setup-view" class="card">
+      <div class="card-header">
+        <span class="card-title">TYPE SAFE API KEY</span>
+      </div>
+      <input
+        id="apiKey"
+        type="password"
+        placeholder="ts_live_..."
+        autocomplete="off"
+        style="width: 100%; margin-bottom: 8px;"
+      />
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <span style="font-size: 10px; font-weight: 600; color: var(--ink-muted);">console.typesafe.ai/keys</span>
+        <div style="display: flex; gap: 6px;">
+          <button id="saveKeyBtn" class="btn btn-primary">SAVE KEY</button>
+          <button id="openConsoleBtn" class="btn btn-white">CONSOLE</button>
+        </div>
+      </div>
+      <div id="setupStatus" class="status-msg"></div>
+    </div>
+
+    <!-- Main Focus Prompt Panel -->
+    <div id="prompt-panel">
+      <!-- Work Goal Card -->
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">CURRENT WORK PROMPT</span>
+          <div class="toggle-wrap">
             <span>FILTER</span>
-            <label class="switch" title="Toggle Tab Filter">
+            <label class="switch" title="Toggle Tab Monitoring">
               <input id="monitoringToggle" type="checkbox" checked />
               <span class="slider"></span>
             </label>
@@ -571,24 +601,18 @@
           id="workPrompt"
           placeholder="e.g. Building an auth service in Go"
         ></textarea>
-        <div class="top-btn-row">
-          <span style="font-size: 10px; color: var(--ink-muted); font-weight: 500;">MONITORS NEW & ACTIVE TABS</span>
-          <button id="savePromptBtn" class="block-btn">UPDATE PROMPT</button>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px;">
+          <span style="font-size: 10px; font-weight: 600; color: var(--ink-muted);">Monitors new & active tabs</span>
+          <button id="savePromptBtn" class="btn btn-primary">UPDATE PROMPT</button>
         </div>
         <div id="goalStatus" class="status-msg"></div>
       </div>
-    </div>
 
-    <!-- HORIZON BISECTION LINE -->
-    <div class="horizon-bisection"></div>
-
-    <!-- BOTTOM SECTION: Saturated Color Field (Bauhaus Purple / Crimson) -->
-    <div class="bottom-section">
-      <!-- Mode Selection -->
-      <div class="theme-card">
+      <!-- Enforcement Mode Selection -->
+      <div class="card" style="padding: 10px 14px;">
         <div style="display: flex; align-items: center; justify-content: space-between;">
-          <span class="theme-label">ON UNRELATED TAB:</span>
-          <select id="enforcementSelect" style="width: auto; padding: 4px 8px; font-size: 11px;">
+          <span class="card-title">ON UNRELATED TAB:</span>
+          <select id="enforcementSelect">
             <option value="grace">5S WARNING</option>
             <option value="instant">CLOSE IMMEDIATELY</option>
           </select>
@@ -596,8 +620,10 @@
       </div>
 
       <!-- Allowed Domains -->
-      <div class="theme-card">
-        <div class="theme-label" style="margin-bottom: 5px;">ALLOWED DOMAINS</div>
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">ALLOWED DOMAINS</span>
+        </div>
         <div style="display: flex; gap: 6px;">
           <input
             id="newDomainInput"
@@ -605,35 +631,35 @@
             placeholder="e.g. youtube.com"
             style="flex: 1;"
           />
-          <button id="addDomainBtn" class="theme-outline-btn">ADD</button>
+          <button id="addDomainBtn" class="btn btn-white">ADD</button>
         </div>
         <div id="allowedTags" class="tag-cloud">
           <!-- Populated dynamically -->
         </div>
       </div>
 
-      <!-- Closed Tabs -->
-      <div class="theme-card">
-        <div class="theme-card-header">
-          <span class="theme-label">RECENTLY CLOSED</span>
-          <button id="clearGraveyardBtn" class="theme-outline-btn theme-outline-btn-sm">CLEAR</button>
+      <!-- Recently Closed Tabs -->
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">RECENTLY CLOSED</span>
+          <button id="clearGraveyardBtn" class="btn btn-white btn-sm">CLEAR</button>
         </div>
         <div id="graveyardList" class="closed-list">
           <div class="empty-state">No closed tabs.</div>
         </div>
       </div>
+    </div>
 
-      <!-- Footer -->
-      <div class="footer">
-        <div style="display: flex; gap: 8px; align-items: center;">
-          <span>OVERWATCH // JEV</span>
-          <span>•</span>
-          <a id="changeKeyBtn" href="#">API KEY</a>
-        </div>
-        <div class="palette-toggle" title="Switch Poster Palette">
-          <button id="setPurpleTheme" class="dot-btn dot-purple" title="Purple Theme"></button>
-          <button id="setCrimsonTheme" class="dot-btn dot-crimson" title="Crimson Artwork Theme"></button>
-        </div>
+    <!-- Footer -->
+    <div class="footer">
+      <div style="display: flex; gap: 8px; align-items: center;">
+        <span>OVERWATCH // JEV</span>
+        <span>•</span>
+        <a id="changeKeyBtn">API KEY</a>
+      </div>
+      <div class="palette-toggle" title="Switch Theme Color">
+        <button id="setCrimsonTheme" class="dot-btn dot-crimson" title="Crimson Theme (Art Match)"></button>
+        <button id="setPurpleTheme" class="dot-btn dot-purple" title="Purple Theme"></button>
       </div>
     </div>
 
