@@ -1,56 +1,52 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
   <defs>
-    <radialGradient id="purpleGlow" cx="50%" cy="50%" r="50%">
-      <stop offset="0%" stop-color="#c084fc" stop-opacity="0.9"/>
-      <stop offset="40%" stop-color="#9333ea" stop-opacity="0.75"/>
-      <stop offset="75%" stop-color="#6b21a8" stop-opacity="0.4"/>
-      <stop offset="100%" stop-color="#07050d" stop-opacity="0"/>
+    <!-- Purple Sun Gradient (like the red circle in the reference) -->
+    <radialGradient id="purpleSun" cx="48%" cy="48%" r="52%">
+      <stop offset="0%" stop-color="#b86bff"/>
+      <stop offset="65%" stop-color="#8b2fc9"/>
+      <stop offset="90%" stop-color="#6b149b"/>
+      <stop offset="100%" stop-color="#4a0870"/>
     </radialGradient>
-    <linearGradient id="bladeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#f5d0fe"/>
-      <stop offset="50%" stop-color="#c084fc"/>
-      <stop offset="100%" stop-color="#7e22ce"/>
-    </linearGradient>
-    <filter id="inkGlow" x="-20%" y="-20%" width="140%" height="140%">
-      <feGaussianBlur stdDeviation="3" result="blur"/>
-      <feMerge>
-        <feMergeNode in="blur"/>
-        <feMergeNode in="SourceGraphic"/>
-      </feMerge>
-    </filter>
   </defs>
 
-  <!-- Deep ink background -->
-  <rect width="128" height="128" rx="20" fill="#090614"/>
+  <!-- Dark sketch paper background -->
+  <rect width="128" height="128" rx="16" fill="#13101c"/>
 
-  <!-- Glowing ink sun circle -->
-  <circle cx="64" cy="64" r="54" fill="url(#purpleGlow)"/>
+  <!-- Ink Splatter Droplets (Background) -->
+  <circle cx="18" cy="22" r="3" fill="#8b2fc9" opacity="0.6"/>
+  <circle cx="26" cy="14" r="1.5" fill="#b86bff" opacity="0.7"/>
+  <circle cx="14" cy="38" r="2" fill="#6b149b" opacity="0.5"/>
+  <circle cx="108" cy="24" r="3.5" fill="#8b2fc9" opacity="0.6"/>
+  <circle cx="116" cy="34" r="2" fill="#b86bff" opacity="0.5"/>
+  <circle cx="112" cy="14" r="1.8" fill="#6b149b" opacity="0.6"/>
+  <circle cx="110" cy="106" r="3" fill="#8b2fc9" opacity="0.7"/>
+  <circle cx="118" cy="96" r="1.5" fill="#b86bff" opacity="0.5"/>
+  <circle cx="22" cy="108" r="2.5" fill="#6b149b" opacity="0.6"/>
+  <circle cx="14" cy="98" r="1.8" fill="#8b2fc9" opacity="0.5"/>
 
-  <!-- Ink splatter droplets -->
-  <circle cx="22" cy="30" r="3.5" fill="#a855f7" opacity="0.8"/>
-  <circle cx="28" cy="22" r="2" fill="#c084fc" opacity="0.6"/>
-  <circle cx="106" cy="28" r="3" fill="#9333ea" opacity="0.7"/>
-  <circle cx="112" cy="38" r="1.5" fill="#a855f7" opacity="0.6"/>
-  <circle cx="18" cy="92" r="2.5" fill="#7e22ce" opacity="0.7"/>
-  <circle cx="104" cy="98" r="3.5" fill="#a855f7" opacity="0.8"/>
-  <circle cx="114" cy="88" r="2" fill="#c084fc" opacity="0.5"/>
-  <path d="M64 8 L66 18 L62 18 Z" fill="#9333ea" opacity="0.7"/>
-  <path d="M64 120 L66 110 L62 110 Z" fill="#9333ea" opacity="0.7"/>
+  <!-- Bold Purple Sun (Hand-drawn Ink Wash Circle) -->
+  <circle cx="64" cy="64" r="46" fill="url(#purpleSun)"/>
 
-  <!-- Dynamic Ink-Brush Sun / Enso ring -->
-  <circle cx="64" cy="64" r="44" stroke="#a855f7" stroke-width="4.5" stroke-dasharray="210 30 20 15" stroke-linecap="round" fill="none" opacity="0.85" filter="url(#inkGlow)"/>
+  <!-- Sketchy Ink Splatter Marks on the Sun -->
+  <circle cx="42" cy="36" r="4" fill="#13101c" opacity="0.4"/>
+  <circle cx="86" cy="48" r="5" fill="#13101c" opacity="0.35"/>
+  <circle cx="48" cy="88" r="3.5" fill="#13101c" opacity="0.4"/>
+  <circle cx="78" cy="82" r="4.5" fill="#13101c" opacity="0.35"/>
 
-  <!-- Sharp Katana Slash through center -->
-  <path d="M16 112 L112 16" stroke="url(#bladeGrad)" stroke-width="3" stroke-linecap="square" filter="url(#inkGlow)"/>
+  <!-- Hand-Drawn Ink Brush Eye / Watcher Silhouette -->
+  <!-- Upper Brush Stroke -->
+  <path d="M 28 64 C 42 42, 86 42, 100 64 C 84 50, 44 50, 28 64 Z" fill="#13101c"/>
+  <!-- Lower Brush Stroke -->
+  <path d="M 28 64 C 44 78, 84 78, 100 64 C 86 72, 42 72, 28 64 Z" fill="#13101c"/>
 
-  <!-- Slit Eye / Focus Pupil -->
-  <path d="M36 64 Q64 42 92 64 Q64 86 36 64 Z" fill="#130926" stroke="#c084fc" stroke-width="2.5"/>
-  <circle cx="64" cy="64" r="8" fill="#f5d0fe" filter="url(#inkGlow)"/>
-  <line x1="64" y1="46" x2="64" y2="82" stroke="#4c1d95" stroke-width="3" stroke-linecap="round"/>
+  <!-- Center Pupil with Ink Glow -->
+  <circle cx="64" cy="64" r="11" fill="#13101c"/>
+  <circle cx="64" cy="64" r="5.5" fill="#fdfbf7"/>
+  <circle cx="66" cy="62" r="2" fill="#ffffff"/>
 
-  <!-- Corner crosshairs / Manga panel markers -->
-  <path d="M12 18 L18 18 M12 18 L12 24" stroke="#a855f7" stroke-width="2" opacity="0.5"/>
-  <path d="M116 18 L110 18 M116 18 L116 24" stroke="#a855f7" stroke-width="2" opacity="0.5"/>
-  <path d="M12 110 L18 110 M12 110 L12 104" stroke="#a855f7" stroke-width="2" opacity="0.5"/>
-  <path d="M116 110 L110 110 M116 110 L116 104" stroke="#a855f7" stroke-width="2" opacity="0.5"/>
+  <!-- Raw Sketch Hatching Lines -->
+  <line x1="64" y1="20" x2="64" y2="30" stroke="#fdfbf7" stroke-width="1.8" stroke-linecap="round" opacity="0.8"/>
+  <line x1="64" y1="98" x2="64" y2="108" stroke="#fdfbf7" stroke-width="1.8" stroke-linecap="round" opacity="0.8"/>
+  <line x1="20" y1="64" x2="30" y2="64" stroke="#fdfbf7" stroke-width="1.8" stroke-linecap="round" opacity="0.8"/>
+  <line x1="98" y1="64" x2="108" y2="64" stroke="#fdfbf7" stroke-width="1.8" stroke-linecap="round" opacity="0.8"/>
 </svg>

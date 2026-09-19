@@ -175,54 +175,52 @@ async function injectWarningBanner(tabId, workGoal, graceSeconds = 5) {
           top: 20px !important;
           right: 20px !important;
           z-index: 2147483647 !important;
-          background: #090614 !important;
-          color: #fdfbf7 !important;
-          border: 1.5px solid rgba(168, 85, 247, 0.6) !important;
-          padding: 16px 20px !important;
+          background: #110e1a !important;
+          color: #f8f6fc !important;
+          border: 1.5px solid rgba(168, 85, 247, 0.45) !important;
+          border-radius: 12px !important;
+          padding: 16px 18px !important;
           font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
-          box-shadow: 0 10px 35px rgba(0,0,0,0.8), 0 0 20px rgba(168, 85, 247, 0.35) !important;
-          max-width: 380px !important;
+          box-shadow: 0 10px 30px rgba(0,0,0,0.6), 0 0 20px rgba(168, 85, 247, 0.2) !important;
+          max-width: 360px !important;
           line-height: 1.45 !important;
-          clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px)) !important;
-          transition: all 0.3s ease !important;
+          transition: all 0.25s ease !important;
         `;
 
         let remaining = seconds;
         banner.innerHTML = `
-          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; border-bottom: 1px solid rgba(168, 85, 247, 0.3); padding-bottom: 6px;">
-            <strong style="font-size: 12px; color: #fdfbf7; letter-spacing: 1px; text-transform: uppercase; font-family: monospace;">OVERWATCH</strong>
-            <span id="overwatch-countdown" style="font-weight: 900; color: #c084fc; font-size: 14px; font-family: monospace; text-shadow: 0 0 8px #a855f7;">${remaining}s</span>
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; border-bottom: 1px solid rgba(168, 85, 247, 0.25); padding-bottom: 6px;">
+            <strong style="font-size: 13px; color: #f8f6fc; font-weight: 700;">Overwatch</strong>
+            <span id="overwatch-countdown" style="font-weight: 700; color: #c084fc; font-size: 13px;">Closing in ${remaining}s</span>
           </div>
-          <p style="margin: 0 0 6px 0; font-size: 12px; color: #998eb0;">
+          <p style="margin: 0 0 6px 0; font-size: 12px; color: #a79fb8;">
             This page doesn't look related to:
           </p>
-          <div style="background: rgba(168, 85, 247, 0.1); border-left: 2px solid #a855f7; padding: 6px 10px; font-size: 11.5px; color: #e9d5ff; margin-bottom: 12px; font-weight: 600; word-break: break-word; font-family: monospace;">
+          <div style="background: rgba(168, 85, 247, 0.1); border-left: 2px solid #a855f7; border-radius: 4px; padding: 6px 10px; font-size: 12px; color: #f8f6fc; margin-bottom: 12px; font-weight: 500; word-break: break-word;">
             "${goalText.replace(/</g, "&lt;")}"
           </div>
           <div style="display: flex; gap: 8px; justify-content: flex-end;">
             <button id="overwatch-keep-btn" style="
-              background: #170f2c;
-              color: #e9d5ff;
-              border: 1px solid rgba(168, 85, 247, 0.4);
-              padding: 7px 14px;
-              font-size: 11px;
-              font-weight: 700;
-              letter-spacing: 1px;
+              background: rgba(255, 255, 255, 0.08);
+              color: #f8f6fc;
+              border: 1px solid rgba(168, 85, 247, 0.3);
+              border-radius: 6px;
+              padding: 6px 12px;
+              font-size: 11.5px;
+              font-weight: 600;
               cursor: pointer;
-              clip-path: polygon(4px 0, 100% 0, calc(100% - 4px) 100%, 0 100%);
-            ">KEEP TAB</button>
+            ">Keep Tab</button>
             <button id="overwatch-close-btn" style="
-              background: linear-gradient(135deg, #9333ea, #a855f7);
-              color: #fdfbf7;
+              background: linear-gradient(135deg, #a855f7, #9333ea);
+              color: #ffffff;
               border: none;
-              padding: 7px 14px;
-              font-size: 11px;
-              font-weight: 800;
-              letter-spacing: 1px;
+              border-radius: 6px;
+              padding: 6px 12px;
+              font-size: 11.5px;
+              font-weight: 600;
               cursor: pointer;
-              box-shadow: 0 0 12px rgba(168, 85, 247, 0.4);
-              clip-path: polygon(4px 0, 100% 0, calc(100% - 4px) 100%, 0 100%);
-            ">CLOSE NOW</button>
+              box-shadow: 0 2px 8px rgba(168, 85, 247, 0.3);
+            ">Close Now</button>
           </div>
         `;
 

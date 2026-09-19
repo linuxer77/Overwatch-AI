@@ -1,5 +1,5 @@
 /**
- * Overwatch AI - Popup Controller (Anime / Manga Ink Theme)
+ * Overwatch AI - Popup Controller (Clean Sketch Style)
  */
 
 const api = typeof browser !== "undefined" ? browser : chrome;
@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     setupView.style.display = "block";
     mainView.style.display = "none";
     statusBadge.className = "status-pill paused";
-    statusBadge.innerHTML = '<span class="indicator"></span><span>SETUP</span>';
+    statusBadge.innerHTML = '<span class="indicator"></span><span>Setup</span>';
     apiKeyInput.focus();
   }
 
@@ -46,10 +46,10 @@ document.addEventListener("DOMContentLoaded", async () => {
   function updateStatusBadge(isActive) {
     if (isActive) {
       statusBadge.className = "status-pill active";
-      statusBadge.innerHTML = '<span class="indicator"></span><span>ACTIVE</span>';
+      statusBadge.innerHTML = '<span class="indicator"></span><span>Active</span>';
     } else {
       statusBadge.className = "status-pill paused";
-      statusBadge.innerHTML = '<span class="indicator"></span><span>PAUSED</span>';
+      statusBadge.innerHTML = '<span class="indicator"></span><span>Paused</span>';
     }
   }
 
@@ -66,7 +66,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   function renderDomainTags(domains = []) {
     allowedTags.innerHTML = "";
     if (domains.length === 0) {
-      allowedTags.innerHTML = '<span style="font-size: 11px; font-family: monospace; color: var(--text-dark); font-style: italic;">No custom domains added</span>';
+      allowedTags.innerHTML = '<span style="font-size: 11px; color: var(--text-muted); font-style: italic;">No custom domains added</span>';
       return;
     }
 
@@ -81,11 +81,11 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
   }
 
-  // Render recently closed tabs (Tab Graveyard)
+  // Render recently closed tabs
   function renderGraveyard(items = []) {
     graveyardList.innerHTML = "";
     if (items.length === 0) {
-      graveyardList.innerHTML = '<div class="empty-state">No closed tabs.</div>';
+      graveyardList.innerHTML = '<div class="empty-state">No closed tabs yet.</div>';
       return;
     }
 
@@ -101,7 +101,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             <span>${formatTimeAgo(item.closedAt)}</span>
           </div>
         </div>
-        <button class="btn btn-secondary btn-sm restore-btn" data-url="${item.url}" title="Reopen this tab">↺ RESTORE</button>
+        <button class="btn btn-secondary btn-sm restore-btn" data-url="${item.url}" title="Reopen this tab">Restore</button>
       `;
       graveyardList.appendChild(row);
     });
@@ -152,12 +152,12 @@ document.addEventListener("DOMContentLoaded", async () => {
     const key = apiKeyInput.value.trim();
     if (!key) {
       setupStatus.className = "status-msg error";
-      setupStatus.textContent = "[!] API key cannot be empty.";
+      setupStatus.textContent = "API key cannot be empty.";
       return;
     }
 
     saveKeyBtn.disabled = true;
-    saveKeyBtn.textContent = "VERIFYING KEY...";
+    saveKeyBtn.textContent = "Verifying key...";
     setupStatus.className = "status-msg";
     setupStatus.textContent = "";
 
@@ -183,7 +183,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       setupStatus.textContent = "Connection error.";
     } finally {
       saveKeyBtn.disabled = false;
-      saveKeyBtn.textContent = "SAVE KEY";
+      saveKeyBtn.textContent = "Save Key";
     }
   });
 

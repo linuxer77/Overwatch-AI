@@ -2,29 +2,25 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>Overwatch AI // 監視</title>
+    <title>Overwatch</title>
     <style>
       :root {
-        --ink-void: #06040a;
-        --ink-deep: #0b0714;
-        --ink-surface: #120c22;
-        --ink-panel: #170f2c;
-        --ink-border: rgba(168, 85, 247, 0.3);
-        --ink-border-bright: rgba(192, 132, 252, 0.6);
-        
+        --paper-bg: #110e1a;
+        --card-bg: #181424;
+        --card-border: rgba(168, 85, 247, 0.22);
+        --card-border-hover: rgba(168, 85, 247, 0.45);
+
         --purple-sun: #9333ea;
-        --purple-core: #a855f7;
+        --purple-bright: #a855f7;
         --purple-glow: #c084fc;
-        --purple-aura: rgba(168, 85, 247, 0.25);
-        --purple-dark: #581c87;
+        --purple-soft: rgba(168, 85, 247, 0.15);
 
-        --text-pure: #fcfaff;
-        --text-bright: #e9d5ff;
-        --text-dim: #998eb0;
-        --text-dark: #63587b;
+        --text-primary: #f8f6fc;
+        --text-secondary: #a79fb8;
+        --text-muted: #726885;
 
-        --crimson: #f43f5e;
-        --crimson-glow: rgba(244, 63, 94, 0.3);
+        --danger: #f43f5e;
+        --success: #10b981;
       }
 
       * {
@@ -33,249 +29,176 @@
 
       body {
         margin: 0;
-        padding: 16px;
-        background-color: var(--ink-void);
-        color: var(--text-bright);
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
-        width: 440px;
-        min-height: 520px;
+        padding: 18px 20px;
+        background-color: var(--paper-bg);
+        color: var(--text-primary);
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        width: 410px;
+        min-height: 480px;
         position: relative;
         overflow-x: hidden;
-        /* Manga screentone dot texture */
-        background-image: 
-          radial-gradient(var(--ink-border) 0.8px, transparent 0.8px),
-          linear-gradient(180deg, #090613 0%, var(--ink-void) 100%);
-        background-size: 10px 10px, 100% 100%;
       }
 
-      /* Massive Glowing Purple Ink Sun backdrop (Reference Style) */
-      .ink-sun-backdrop {
+      /* Bold Purple Sun (Hand-drawn Ink Wash Artwork from Reference) */
+      .ink-sun-graphic {
         position: absolute;
-        top: -60px;
-        right: -60px;
-        width: 220px;
-        height: 220px;
+        top: -45px;
+        right: -45px;
+        width: 170px;
+        height: 170px;
         border-radius: 50%;
-        background: radial-gradient(circle, #a855f7 0%, #7e22ce 45%, #3b0764 75%, transparent 100%);
-        opacity: 0.45;
-        filter: blur(12px);
+        background: radial-gradient(circle, #a855f7 0%, #7e22ce 55%, #3b0764 85%, transparent 100%);
+        opacity: 0.42;
+        filter: blur(8px);
         pointer-events: none;
         z-index: 0;
       }
 
-      .ink-splatter-accent {
+      /* Ink Splatter specks */
+      .ink-splatter {
         position: absolute;
-        top: 20px;
-        right: 130px;
-        width: 8px;
-        height: 8px;
+        top: 24px;
+        right: 125px;
+        width: 6px;
+        height: 6px;
         border-radius: 50%;
-        background: var(--purple-glow);
-        box-shadow: 
-          -15px 12px 0 2px var(--purple-sun),
-          25px -8px 0 1.5px var(--purple-core),
-          -30px 35px 0 1px var(--purple-dark),
-          -8px 45px 0 2.5px var(--purple-glow);
-        opacity: 0.6;
+        background: var(--purple-bright);
+        box-shadow:
+          -18px 16px 0 2px var(--purple-sun),
+          20px -10px 0 1.5px var(--purple-glow),
+          -12px 34px 0 1px var(--purple-bright),
+          -32px 14px 0 1.5px rgba(168, 85, 247, 0.6),
+          8px 48px 0 2px var(--purple-glow);
+        opacity: 0.55;
         pointer-events: none;
         z-index: 0;
       }
 
-      .container {
+      .content-wrapper {
         position: relative;
         z-index: 1;
       }
 
-      /* Header Panel */
+      /* Header */
       .header {
         display: flex;
         align-items: center;
         justify-content: space-between;
+        margin-bottom: 16px;
         padding-bottom: 12px;
-        margin-bottom: 14px;
-        border-bottom: 2px solid var(--ink-border);
-        position: relative;
+        border-bottom: 1px solid var(--card-border);
       }
 
-      .header::after {
-        content: "";
-        position: absolute;
-        bottom: -2px;
-        left: 0;
-        width: 60px;
-        height: 2px;
-        background: var(--purple-glow);
-        box-shadow: 0 0 10px var(--purple-glow);
-      }
-
-      .brand-group {
+      .brand {
         display: flex;
         align-items: center;
         gap: 12px;
       }
 
-      .logo-frame {
-        width: 38px;
-        height: 38px;
-        background: var(--ink-surface);
-        border: 1.5px solid var(--purple-core);
-        padding: 3px;
-        clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 6px 100%, 0 calc(100% - 6px));
-        box-shadow: 0 0 12px var(--purple-aura);
+      .brand-logo {
+        width: 36px;
+        height: 36px;
+        border-radius: 10px;
+        border: 1.5px solid var(--card-border-hover);
+        overflow: hidden;
+        background: var(--card-bg);
         display: flex;
         align-items: center;
         justify-content: center;
       }
 
-      .logo-frame img {
+      .brand-logo img {
         width: 100%;
         height: 100%;
       }
 
-      .title-area h1 {
+      .brand-info h1 {
         margin: 0;
-        font-size: 16px;
-        font-weight: 800;
-        letter-spacing: 1.5px;
-        color: var(--text-pure);
-        text-transform: uppercase;
-        display: flex;
-        align-items: center;
-        gap: 6px;
-      }
-
-      .title-area .kanji-badge {
-        font-size: 11px;
-        background: var(--purple-sun);
-        color: white;
-        padding: 1px 5px;
-        border-radius: 2px;
-        font-weight: 900;
-        letter-spacing: 0;
-      }
-
-      .title-area .sub {
-        font-size: 10px;
-        letter-spacing: 1.2px;
-        color: var(--purple-glow);
-        text-transform: uppercase;
-        font-family: monospace;
-      }
-
-      /* Status Badge */
-      .status-pill {
-        font-family: monospace;
-        font-size: 11px;
+        font-size: 17px;
         font-weight: 700;
+        color: var(--text-primary);
+        letter-spacing: -0.2px;
+      }
+
+      .brand-info p {
+        margin: 1px 0 0 0;
+        font-size: 11.5px;
+        color: var(--text-muted);
+      }
+
+      /* Clean Status Pill */
+      .status-pill {
+        font-size: 11px;
+        font-weight: 600;
         padding: 4px 10px;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        border: 1px solid var(--ink-border);
-        background: var(--ink-surface);
-        clip-path: polygon(6px 0, 100% 0, calc(100% - 6px) 100%, 0 100%);
+        border-radius: 9999px;
+        border: 1px solid var(--card-border);
+        background: rgba(24, 20, 36, 0.8);
         display: flex;
         align-items: center;
         gap: 6px;
       }
 
       .status-pill.active {
-        border-color: var(--purple-core);
         color: var(--purple-glow);
-        box-shadow: 0 0 12px rgba(168, 85, 247, 0.35);
+        border-color: rgba(168, 85, 247, 0.4);
       }
 
       .status-pill.active .indicator {
-        width: 7px;
-        height: 7px;
-        background: var(--purple-glow);
+        width: 6px;
+        height: 6px;
         border-radius: 50%;
-        box-shadow: 0 0 8px var(--purple-core);
-        animation: pulse 2s infinite;
+        background: var(--purple-bright);
+        box-shadow: 0 0 8px var(--purple-bright);
       }
 
       .status-pill.paused {
-        border-color: rgba(244, 63, 94, 0.4);
-        color: var(--crimson);
+        color: var(--danger);
+        border-color: rgba(244, 63, 94, 0.3);
       }
 
       .status-pill.paused .indicator {
-        width: 7px;
-        height: 7px;
-        background: var(--crimson);
+        width: 6px;
+        height: 6px;
         border-radius: 50%;
+        background: var(--danger);
       }
 
-      @keyframes pulse {
-        0%, 100% { opacity: 1; transform: scale(1); }
-        50% { opacity: 0.4; transform: scale(0.85); }
-      }
-
-      /* Manga Card Panels with Angled Corners */
-      .manga-panel {
-        background: var(--ink-surface);
-        border: 1px solid var(--ink-border);
-        padding: 13px 14px;
+      /* Clean Sketch Cards */
+      .sketch-card {
+        background: var(--card-bg);
+        border: 1px solid var(--card-border);
+        border-radius: 12px;
+        padding: 14px 15px;
         margin-bottom: 12px;
-        position: relative;
-        clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
-        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+        box-shadow: 0 4px 18px rgba(0, 0, 0, 0.25);
+        transition: border-color 0.2s ease;
       }
 
-      /* Authentic manga corner markers */
-      .manga-panel::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 6px;
-        height: 6px;
-        border-top: 2px solid var(--purple-glow);
-        border-left: 2px solid var(--purple-glow);
+      .sketch-card:hover {
+        border-color: var(--card-border-hover);
       }
 
-      .manga-panel::after {
-        content: "";
-        position: absolute;
-        bottom: 0;
-        right: 0;
-        width: 6px;
-        height: 6px;
-        border-bottom: 2px solid var(--purple-glow);
-        border-right: 2px solid var(--purple-glow);
-      }
-
-      .panel-header {
+      .card-header {
         display: flex;
         align-items: center;
         justify-content: space-between;
         margin-bottom: 8px;
       }
 
-      .panel-label {
-        font-size: 11px;
-        font-weight: 800;
-        letter-spacing: 1.4px;
-        text-transform: uppercase;
-        color: var(--purple-glow);
-        display: flex;
-        align-items: center;
-        gap: 6px;
-      }
-
-      .panel-label .glyph {
-        color: var(--purple-sun);
+      .card-label {
         font-size: 12px;
+        font-weight: 600;
+        color: var(--text-secondary);
       }
 
-      /* Form inputs */
+      /* Inputs */
       label {
         display: block;
-        font-size: 11px;
-        letter-spacing: 0.8px;
-        color: var(--text-dim);
-        margin-bottom: 5px;
-        text-transform: uppercase;
-        font-family: monospace;
+        font-size: 12px;
+        font-weight: 500;
+        color: var(--text-secondary);
+        margin-bottom: 6px;
       }
 
       input[type="text"],
@@ -285,94 +208,86 @@
         width: 100%;
         padding: 10px 12px;
         font-size: 13px;
-        color: var(--text-pure);
-        background: var(--ink-deep);
-        border: 1px solid var(--ink-border);
+        color: var(--text-primary);
+        background: #0f0c18;
+        border: 1px solid var(--card-border);
+        border-radius: 8px;
         outline: none;
         box-sizing: border-box;
-        transition: all 0.2s ease;
+        transition: border-color 0.2s, box-shadow 0.2s;
         font-family: inherit;
-        border-radius: 0;
-        clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 0 100%);
       }
 
       input:focus,
       select:focus,
       textarea:focus {
-        border-color: var(--purple-core);
-        background: #150e2a;
-        box-shadow: 0 0 10px var(--purple-aura), inset 0 0 8px rgba(168, 85, 247, 0.15);
+        border-color: var(--purple-bright);
+        box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.2);
       }
 
       textarea {
         resize: vertical;
-        min-height: 58px;
+        min-height: 56px;
         line-height: 1.45;
       }
 
-      /* Sharp Anime Blade Buttons */
+      /* Buttons */
       .btn {
         appearance: none;
         border: none;
-        padding: 9px 16px;
-        font-size: 12px;
-        font-weight: 800;
-        letter-spacing: 1.2px;
-        text-transform: uppercase;
+        border-radius: 8px;
+        padding: 8px 14px;
+        font-size: 12.5px;
+        font-weight: 600;
         cursor: pointer;
-        transition: all 0.15s ease;
+        transition: opacity 0.15s, transform 0.1s;
         display: inline-flex;
         align-items: center;
         justify-content: center;
         gap: 6px;
-        position: relative;
-        clip-path: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px);
       }
 
       .btn:active {
-        transform: translateY(1px);
+        transform: scale(0.98);
       }
 
       .btn:disabled {
-        opacity: 0.4;
+        opacity: 0.5;
         cursor: not-allowed;
       }
 
       .btn-primary {
-        background: linear-gradient(135deg, var(--purple-sun), var(--purple-core));
-        color: var(--text-pure);
-        box-shadow: 0 0 14px var(--purple-aura);
-        border-left: 2px solid #f5d0fe;
+        background: linear-gradient(135deg, var(--purple-bright), var(--purple-sun));
+        color: #ffffff;
+        box-shadow: 0 2px 10px rgba(168, 85, 247, 0.3);
       }
 
       .btn-primary:hover:not(:disabled) {
-        background: linear-gradient(135deg, var(--purple-core), #c084fc);
-        box-shadow: 0 0 20px rgba(168, 85, 247, 0.5);
+        opacity: 0.92;
       }
 
       .btn-secondary {
-        background: var(--ink-panel);
-        color: var(--text-bright);
-        border: 1px solid var(--ink-border);
+        background: rgba(255, 255, 255, 0.06);
+        color: var(--text-primary);
+        border: 1px solid var(--card-border);
       }
 
       .btn-secondary:hover:not(:disabled) {
-        border-color: var(--purple-glow);
-        color: var(--text-pure);
-        background: #1f153a;
+        background: rgba(255, 255, 255, 0.1);
+        border-color: var(--card-border-hover);
       }
 
       .btn-sm {
-        padding: 5px 10px;
-        font-size: 10.5px;
+        padding: 6px 11px;
+        font-size: 11.5px;
       }
 
-      /* Cyber-Manga Custom Toggle */
+      /* Minimalist Smooth Switch */
       .switch {
         position: relative;
         display: inline-block;
-        width: 48px;
-        height: 22px;
+        width: 38px;
+        height: 20px;
       }
 
       .switch input {
@@ -388,37 +303,32 @@
         left: 0;
         right: 0;
         bottom: 0;
-        background-color: var(--ink-deep);
-        border: 1px solid var(--ink-border);
+        background-color: rgba(255, 255, 255, 0.15);
         transition: 0.25s;
-        clip-path: polygon(4px 0, 100% 0, calc(100% - 4px) 100%, 0 100%);
+        border-radius: 20px;
       }
 
       .slider:before {
         position: absolute;
         content: "";
         height: 14px;
-        width: 18px;
+        width: 14px;
         left: 3px;
         bottom: 3px;
-        background-color: var(--text-dim);
+        background-color: #ffffff;
         transition: 0.25s;
-        clip-path: polygon(3px 0, 100% 0, calc(100% - 3px) 100%, 0 100%);
+        border-radius: 50%;
       }
 
       input:checked + .slider {
-        background-color: var(--purple-dark);
-        border-color: var(--purple-glow);
-        box-shadow: 0 0 10px var(--purple-aura);
+        background-color: var(--purple-bright);
       }
 
       input:checked + .slider:before {
-        transform: translateX(23px);
-        background-color: var(--purple-glow);
-        box-shadow: 0 0 8px var(--purple-core);
+        transform: translateX(18px);
       }
 
-      /* Tag List */
+      /* Domain Tags */
       .tag-container {
         display: flex;
         flex-wrap: wrap;
@@ -429,56 +339,46 @@
       }
 
       .tag {
-        background: var(--ink-deep);
-        border: 1px solid var(--ink-border);
+        background: rgba(168, 85, 247, 0.1);
+        border: 1px solid rgba(168, 85, 247, 0.2);
+        border-radius: 6px;
         padding: 3px 8px;
         font-size: 11px;
-        font-family: monospace;
-        color: var(--text-bright);
+        color: var(--text-primary);
         display: inline-flex;
         align-items: center;
         gap: 6px;
-        clip-path: polygon(4px 0, 100% 0, calc(100% - 4px) 100%, 0 100%);
       }
 
       .tag-remove {
         cursor: pointer;
-        color: var(--text-dim);
+        color: var(--text-muted);
         font-weight: bold;
       }
 
       .tag-remove:hover {
-        color: var(--crimson);
+        color: var(--danger);
       }
 
-      /* Fallen Tabs (Graveyard) */
+      /* Closed Tabs list */
       .graveyard-list {
         display: flex;
         flex-direction: column;
         gap: 6px;
-        max-height: 140px;
+        max-height: 130px;
         overflow-y: auto;
         margin-top: 6px;
       }
 
       .graveyard-item {
-        background: var(--ink-deep);
-        border: 1px solid var(--ink-border);
+        background: #0f0c18;
+        border: 1px solid var(--card-border);
+        border-radius: 8px;
         padding: 8px 10px;
         display: flex;
         align-items: center;
         justify-content: space-between;
         gap: 10px;
-        position: relative;
-        clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 0 100%);
-      }
-
-      .graveyard-item::before {
-        content: "斬";
-        font-size: 10px;
-        color: var(--purple-core);
-        font-weight: 900;
-        margin-right: -2px;
       }
 
       .graveyard-info {
@@ -487,34 +387,30 @@
       }
 
       .graveyard-title {
-        font-size: 11.5px;
-        font-weight: 600;
+        font-size: 12px;
+        font-weight: 500;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
-        color: var(--text-pure);
+        color: var(--text-primary);
       }
 
       .graveyard-meta {
-        font-size: 10px;
-        font-family: monospace;
-        color: var(--text-dim);
+        font-size: 10.5px;
+        color: var(--text-muted);
         display: flex;
         gap: 6px;
       }
 
       .empty-state {
         text-align: center;
-        font-size: 11px;
-        font-family: monospace;
-        color: var(--text-dark);
-        padding: 14px 0;
-        letter-spacing: 1px;
+        font-size: 12px;
+        color: var(--text-muted);
+        padding: 12px 0;
       }
 
       .status-msg {
         font-size: 11.5px;
-        font-family: monospace;
         margin-top: 8px;
         display: none;
       }
@@ -522,12 +418,11 @@
       .status-msg.ok {
         display: block;
         color: var(--purple-glow);
-        text-shadow: 0 0 6px var(--purple-aura);
       }
 
       .status-msg.error {
         display: block;
-        color: var(--crimson);
+        color: var(--danger);
       }
 
       /* Footer */
@@ -535,24 +430,20 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        font-size: 10px;
-        font-family: monospace;
-        letter-spacing: 1px;
-        color: var(--text-dim);
-        margin-top: 12px;
+        font-size: 11px;
+        color: var(--text-muted);
+        margin-top: 10px;
         padding-top: 8px;
-        border-top: 1px solid var(--ink-border);
+        border-top: 1px solid var(--card-border);
       }
 
       a {
         color: var(--purple-glow);
         text-decoration: none;
-        transition: color 0.15s ease;
       }
 
       a:hover {
-        color: #f5d0fe;
-        text-shadow: 0 0 8px var(--purple-core);
+        text-decoration: underline;
       }
 
       #setup-view {
@@ -561,63 +452,57 @@
     </style>
   </head>
   <body>
-    <!-- Background Ink Elements -->
-    <div class="ink-sun-backdrop"></div>
-    <div class="ink-splatter-accent"></div>
+    <!-- Hand-drawn Ink Sun Artwork Element (Reference Style) -->
+    <div class="ink-sun-graphic"></div>
+    <div class="ink-splatter"></div>
 
-    <div class="container">
+    <div class="content-wrapper">
       <!-- Header -->
       <div class="header">
-        <div class="brand-group">
-          <div class="logo-frame">
-            <img src="assets/logo.svg" alt="Overwatch AI Emblem" />
+        <div class="brand">
+          <div class="brand-logo">
+            <img src="assets/logo.svg" alt="Overwatch Logo" />
           </div>
-          <div class="title-area">
-            <h1>OVERWATCH <span class="kanji-badge">監視</span></h1>
-            <div class="sub">// JEV TAB FILTER</div>
+          <div class="brand-info">
+            <h1>Overwatch</h1>
+            <p>Tab distraction blocker</p>
           </div>
         </div>
         <div id="statusBadge" class="status-pill active">
           <span class="indicator"></span>
-          <span>ACTIVE</span>
+          <span>Active</span>
         </div>
       </div>
 
       <!-- Setup View (When API Key is missing) -->
-      <div id="setup-view" class="manga-panel">
-        <div class="panel-label">
-          <span class="glyph">❖</span>
-          <span>TYPESAFE API KEY</span>
-        </div>
-        <p style="font-size: 12px; color: var(--text-dim); margin: 6px 0 12px 0; line-height: 1.45;">
-          Enter your TypeSafe API key to enable tab monitoring with Jev.
+      <div id="setup-view" class="sketch-card">
+        <div class="card-label" style="margin-bottom: 6px;">Setup TypeSafe API Key</div>
+        <p style="font-size: 12px; color: var(--text-secondary); margin: 0 0 12px 0; line-height: 1.4;">
+          Enter your TypeSafe API key to enable fast tab monitoring with Jev.
         </p>
-        <label for="apiKey">API KEY</label>
+        <label for="apiKey">API Key</label>
         <input
           id="apiKey"
           type="password"
           placeholder="ts_live_..."
           autocomplete="off"
         />
-        <p style="font-size: 11px; font-family: monospace; color: var(--text-dim); margin: 8px 0 14px 0;">
-          GET A KEY AT <a href="https://console.typesafe.ai/keys" target="_blank" rel="noopener noreferrer">CONSOLE.TYPESAFE.AI ↗</a>
+        <p style="font-size: 11px; color: var(--text-muted); margin: 6px 0 12px 0;">
+          Get your key from <a href="https://console.typesafe.ai/keys" target="_blank" rel="noopener noreferrer">console.typesafe.ai</a>
         </p>
         <div style="display: flex; gap: 8px;">
-          <button id="saveKeyBtn" class="btn btn-primary" style="flex: 1;">SAVE KEY</button>
-          <button id="openConsoleBtn" class="btn btn-secondary">CONSOLE</button>
+          <button id="saveKeyBtn" class="btn btn-primary" style="flex: 1;">Save Key</button>
+          <button id="openConsoleBtn" class="btn btn-secondary">Open Console</button>
         </div>
         <div id="setupStatus" class="status-msg"></div>
       </div>
 
       <!-- Main View -->
       <div id="main-view">
-        <!-- Active Focus Goal Panel -->
-        <div class="manga-panel">
-          <div class="panel-header">
-            <div class="panel-label">
-              <span class="glyph">⚔</span>
-              <span>CURRENT WORK PROMPT</span>
-            </div>
+        <!-- Goal Card -->
+        <div class="sketch-card">
+          <div class="card-header">
+            <span class="card-label">What are you working on?</span>
             <label class="switch" title="Toggle Monitoring">
               <input id="monitoringToggle" type="checkbox" checked />
               <span class="slider"></span>
@@ -628,42 +513,35 @@
             placeholder="e.g. Building an auth service in Go"
           ></textarea>
           <div style="display: flex; justify-content: flex-end; margin-top: 8px;">
-            <button id="savePromptBtn" class="btn btn-primary btn-sm">UPDATE PROMPT</button>
+            <button id="savePromptBtn" class="btn btn-primary btn-sm">Save Prompt</button>
           </div>
           <div id="goalStatus" class="status-msg"></div>
         </div>
 
         <!-- Mode -->
-        <div class="manga-panel">
+        <div class="sketch-card">
           <div style="display: flex; align-items: center; justify-content: space-between;">
             <div>
-              <div class="panel-label" style="margin-bottom: 2px;">
-                <span class="glyph">⚡</span>
-                <span>ON DISTRACTION</span>
-              </div>
-              <span style="font-size: 10.5px; font-family: monospace; color: var(--text-dim);">HOW TO HANDLE UNRELATED TABS</span>
+              <div class="card-label">On unrelated tab:</div>
             </div>
-            <select id="enforcementSelect" style="width: auto; padding: 6px 10px; font-size: 11px;">
-              <option value="grace">5S WARNING</option>
-              <option value="instant">CLOSE IMMEDIATELY</option>
+            <select id="enforcementSelect" style="width: auto; padding: 6px 10px; font-size: 12px;">
+              <option value="grace">5s Warning</option>
+              <option value="instant">Close immediately</option>
             </select>
           </div>
         </div>
 
         <!-- Allowed Domains -->
-        <div class="manga-panel">
-          <div class="panel-label">
-            <span class="glyph">🛡</span>
-            <span>ALLOWED DOMAINS</span>
-          </div>
-          <div style="display: flex; gap: 8px; margin-top: 6px;">
+        <div class="sketch-card">
+          <div class="card-label" style="margin-bottom: 6px;">Allowed domains</div>
+          <div style="display: flex; gap: 8px;">
             <input
               id="newDomainInput"
               type="text"
               placeholder="e.g. youtube.com"
               style="flex: 1;"
             />
-            <button id="addDomainBtn" class="btn btn-secondary btn-sm">ADD</button>
+            <button id="addDomainBtn" class="btn btn-secondary btn-sm">Add</button>
           </div>
           <div id="allowedTags" class="tag-container">
             <!-- Dynamically populated -->
@@ -671,23 +549,20 @@
         </div>
 
         <!-- Closed Tabs -->
-        <div class="manga-panel">
-          <div class="panel-header">
-            <div class="panel-label">
-              <span class="glyph">斬</span>
-              <span>CLOSED TABS</span>
-            </div>
-            <button id="clearGraveyardBtn" class="btn btn-secondary btn-sm" style="font-size: 9.5px; padding: 2px 8px;">CLEAR</button>
+        <div class="sketch-card">
+          <div class="card-header">
+            <span class="card-label">Recently closed</span>
+            <button id="clearGraveyardBtn" class="btn btn-secondary btn-sm" style="font-size: 10px; padding: 2px 7px;">Clear</button>
           </div>
           <div id="graveyardList" class="graveyard-list">
-            <div class="empty-state">No closed tabs.</div>
+            <div class="empty-state">No closed tabs yet.</div>
           </div>
         </div>
 
         <!-- Footer -->
         <div class="footer">
-          <span>POWERED BY <strong>JEV</strong> // TYPESAFE AI</span>
-          <a id="changeKeyBtn" href="#">API KEY</a>
+          <span>Powered by <strong>Jev</strong></span>
+          <a id="changeKeyBtn" href="#">API key</a>
         </div>
       </div>
     </div>
