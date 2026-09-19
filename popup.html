@@ -1,137 +1,370 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <title>Overwatch AI</title>
     <style>
       :root {
-        --bg: #0f172a;
-        --card: #111827;
-        --text: #e5e7eb;
-        --muted: #9ca3af;
-        --brand: #2563eb;
-        --brand-2: #7c3aed;
+        --bg: #0b0f19;
+        --card: #131b2e;
+        --card-border: rgba(255, 255, 255, 0.08);
+        --text: #f1f5f9;
+        --muted: #94a3b8;
+        --brand: #6366f1;
+        --brand-glow: rgba(99, 102, 241, 0.3);
+        --brand-gradient: linear-gradient(135deg, #6366f1, #a855f7);
         --danger: #ef4444;
-        --success: #16a34a;
+        --danger-bg: rgba(239, 68, 68, 0.15);
+        --success: #10b981;
+        --success-bg: rgba(16, 185, 129, 0.15);
+        --accent: #38bdf8;
       }
-      html,
+
+      * {
+        box-sizing: border-box;
+      }
+
       body {
         margin: 0;
-        padding: 0;
-      }
-      body {
-        font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu,
-          Cantarell, "Noto Sans", "Helvetica Neue", Arial, "Apple Color Emoji",
-          "Segoe UI Emoji";
-        color: var(--text);
-        background: linear-gradient(135deg, var(--bg), #111827 60%);
         padding: 16px;
-        box-sizing: border-box;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        color: var(--text);
+        background: radial-gradient(circle at top left, #1e1b4b 0%, var(--bg) 70%);
         width: 420px;
-        height: auto;
+        min-height: 480px;
       }
+
       .header {
         display: flex;
         align-items: center;
+        justify-content: space-between;
+        margin-bottom: 14px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid var(--card-border);
+      }
+
+      .header-brand {
+        display: flex;
+        align-items: center;
         gap: 10px;
-        margin-bottom: 12px;
       }
+
       .logo {
-        width: 24px;
-        height: 24px;
-        border-radius: 6px;
-        overflow: hidden;
+        width: 28px;
+        height: 28px;
         display: inline-flex;
+        border-radius: 8px;
+        overflow: hidden;
       }
+
       .logo img {
         width: 100%;
         height: 100%;
-        display: block;
       }
-      h2 {
+
+      h1 {
         margin: 0;
-        font-size: 18px;
+        font-size: 17px;
         font-weight: 700;
+        letter-spacing: -0.3px;
       }
+
+      .badge {
+        font-size: 11px;
+        font-weight: 600;
+        padding: 3px 8px;
+        border-radius: 9999px;
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+      }
+
+      .badge.active {
+        background: var(--success-bg);
+        color: #34d399;
+        border: 1px solid rgba(16, 185, 129, 0.3);
+      }
+
+      .badge.paused {
+        background: rgba(234, 179, 8, 0.15);
+        color: #facc15;
+        border: 1px solid rgba(234, 179, 8, 0.3);
+      }
+
       .card {
-        background: rgba(17, 24, 39, 0.95);
-        border: 1px solid rgba(255, 255, 255, 0.08);
+        background: var(--card);
+        border: 1px solid var(--card-border);
         border-radius: 12px;
         padding: 14px;
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
-      }
-      .subtle {
-        color: var(--muted);
-        font-size: 13px;
-        line-height: 1.3;
-        margin-top: 6px;
         margin-bottom: 12px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
       }
+
+      .card-title {
+        font-size: 12px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.6px;
+        color: var(--muted);
+        margin-bottom: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
       label {
         display: block;
-        font-size: 13px;
+        font-size: 12px;
         color: var(--muted);
-        margin-bottom: 6px;
+        margin-bottom: 5px;
       }
+
       input[type="text"],
-      input[type="password"] {
+      input[type="password"],
+      select,
+      textarea {
         width: 100%;
-        padding: 10px 12px;
-        font-size: 14px;
+        padding: 9px 12px;
+        font-size: 13px;
         color: var(--text);
-        background: #0b1220;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 10px;
+        background: rgba(11, 15, 25, 0.8);
+        border: 1px solid var(--card-border);
+        border-radius: 8px;
         outline: none;
         box-sizing: border-box;
+        transition: border-color 0.2s, box-shadow 0.2s;
+        font-family: inherit;
       }
-      input::placeholder {
-        color: #6b7280;
+
+      input:focus,
+      select:focus,
+      textarea:focus {
+        border-color: var(--brand);
+        box-shadow: 0 0 0 2px var(--brand-glow);
       }
+
+      textarea {
+        resize: vertical;
+        min-height: 54px;
+        line-height: 1.4;
+      }
+
       .row {
         display: flex;
-        gap: 10px;
+        gap: 8px;
         align-items: center;
       }
-      .actions {
+
+      .space-between {
         display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-        margin-top: 10px;
+        align-items: center;
+        justify-content: space-between;
       }
+
       button {
         appearance: none;
         border: none;
-        border-radius: 10px;
-        padding: 10px 12px;
-        font-size: 14px;
+        border-radius: 8px;
+        padding: 8px 14px;
+        font-size: 13px;
         font-weight: 600;
         cursor: pointer;
+        transition: opacity 0.2s, transform 0.1s;
       }
+
+      button:active {
+        transform: scale(0.98);
+      }
+
+      button:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+
       .btn-primary {
-        background: linear-gradient(135deg, var(--brand), var(--brand-2));
+        background: var(--brand-gradient);
         color: white;
+        box-shadow: 0 2px 10px var(--brand-glow);
       }
+
+      .btn-primary:hover:not(:disabled) {
+        opacity: 0.92;
+      }
+
       .btn-secondary {
-        background: rgba(255, 255, 255, 0.06);
+        background: rgba(255, 255, 255, 0.07);
         color: var(--text);
-        border: 1px solid rgba(255, 255, 255, 0.08);
+        border: 1px solid var(--card-border);
       }
-      .status {
-        font-size: 13px;
-        margin-top: 10px;
+
+      .btn-secondary:hover:not(:disabled) {
+        background: rgba(255, 255, 255, 0.12);
       }
-      .status.error {
+
+      .btn-sm {
+        padding: 5px 10px;
+        font-size: 12px;
+      }
+
+      /* Toggle Switch */
+      .switch {
+        position: relative;
+        display: inline-block;
+        width: 44px;
+        height: 24px;
+      }
+
+      .switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+
+      .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(255, 255, 255, 0.15);
+        transition: 0.3s;
+        border-radius: 24px;
+      }
+
+      .slider:before {
+        position: absolute;
+        content: "";
+        height: 18px;
+        width: 18px;
+        left: 3px;
+        bottom: 3px;
+        background-color: white;
+        transition: 0.3s;
+        border-radius: 50%;
+      }
+
+      input:checked + .slider {
+        background-color: var(--brand);
+      }
+
+      input:checked + .slider:before {
+        transform: translateX(20px);
+      }
+
+      /* Domain Tags */
+      .tag-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        margin-top: 8px;
+        max-height: 80px;
+        overflow-y: auto;
+      }
+
+      .tag {
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 6px;
+        padding: 2px 8px;
+        font-size: 11px;
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        color: #cbd5e1;
+      }
+
+      .tag-remove {
+        cursor: pointer;
+        color: var(--muted);
+        font-weight: bold;
+      }
+
+      .tag-remove:hover {
         color: var(--danger);
       }
-      .status.ok {
+
+      /* Graveyard List */
+      .graveyard-list {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        max-height: 140px;
+        overflow-y: auto;
+        margin-top: 6px;
+      }
+
+      .graveyard-item {
+        background: rgba(11, 15, 25, 0.6);
+        border: 1px solid var(--card-border);
+        border-radius: 8px;
+        padding: 8px 10px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+      }
+
+      .graveyard-info {
+        flex: 1;
+        min-width: 0;
+      }
+
+      .graveyard-title {
+        font-size: 12px;
+        font-weight: 500;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        color: #e2e8f0;
+      }
+
+      .graveyard-meta {
+        font-size: 11px;
+        color: var(--muted);
+        display: flex;
+        gap: 6px;
+      }
+
+      .empty-state {
+        text-align: center;
+        font-size: 12px;
+        color: var(--muted);
+        padding: 12px 0;
+      }
+
+      .status-msg {
+        font-size: 12px;
+        margin-top: 8px;
+        display: none;
+      }
+
+      .status-msg.ok {
+        display: block;
         color: var(--success);
       }
 
+      .status-msg.error {
+        display: block;
+        color: var(--danger);
+      }
+
+      .footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 11px;
+        color: var(--muted);
+        margin-top: 10px;
+        padding-top: 8px;
+        border-top: 1px solid var(--card-border);
+      }
+
       a {
-        color: #93c5fd;
+        color: #818cf8;
         text-decoration: none;
       }
+
       a:hover {
         text-decoration: underline;
       }
@@ -139,69 +372,119 @@
       #setup-view {
         display: none;
       }
+
       #main-view {
         display: none;
-      }
-
-      html,
-      body {
-        height: auto;
       }
     </style>
   </head>
   <body>
+    <!-- Header -->
     <div class="header">
-      <div class="logo" aria-hidden="true">
-        <img src="assets/logo.svg" alt="Overwatch AI Logo" />
+      <div class="header-brand">
+        <div class="logo">
+          <img src="assets/logo.svg" alt="Overwatch AI Logo" />
+        </div>
+        <div>
+          <h1>Overwatch AI</h1>
+        </div>
       </div>
-      <h2>Overwatch AI</h2>
+      <div id="statusBadge" class="badge active">
+        <span>🟢 Monitoring</span>
+      </div>
     </div>
 
-    <div id="setup-view" class="card" role="region" aria-label="API key setup">
-      <div class="subtle">First-time setup</div>
-      <label for="apiKey">Together API Key</label>
+    <!-- Setup View (When API Key is missing) -->
+    <div id="setup-view" class="card">
+      <div class="card-title">Setup TypeSafe AI Key</div>
+      <p style="font-size: 12.5px; color: var(--muted); margin-top: 0; line-height: 1.4;">
+        Overwatch AI uses <strong>Jev</strong> (TypeSafe System One model) for sub-200ms real-time tab classification.
+      </p>
+      <label for="apiKey">TypeSafe API Key</label>
       <input
         id="apiKey"
         type="password"
-        placeholder="Paste your Together API key"
+        placeholder="ts_live_..."
         autocomplete="off"
       />
-      <div class="subtle">
-        Don’t have a key? Get one from
-        <a
-          href="https://www.together.ai/"
-          target="_blank"
-          rel="noreferrer noopener"
-          >Together.ai</a
-        >.
+      <p style="font-size: 11.5px; color: var(--muted); margin: 6px 0 14px 0;">
+        Get an early access key from the
+        <a href="https://console.typesafe.ai/keys" target="_blank" rel="noopener noreferrer">TypeSafe Console</a>.
+      </p>
+      <div class="row">
+        <button id="saveKeyBtn" class="btn-primary">Save & Validate Key</button>
+        <button id="openConsoleBtn" class="btn-secondary">Open Console</button>
       </div>
-      <div class="actions">
-        <button id="saveKey" class="btn-primary">Save API Key</button>
-        <button id="openTogether" class="btn-secondary">
-          Open Together.ai
-        </button>
-      </div>
-      <div id="key-status" class="status" aria-live="polite"></div>
+      <div id="setupStatus" class="status-msg"></div>
     </div>
 
-    <div
-      id="main-view"
-      class="card"
-      role="region"
-      aria-label="Monitoring controls"
-    >
-      <label for="prompt">Your work focus</label>
-      <input
-        id="prompt"
-        type="text"
-        placeholder="e.g. Building a React component for the dashboard"
-      />
-      <div class="actions">
-        <button id="start" class="btn-primary">Start Monitoring</button>
-        <button id="changeKey" class="btn-secondary">Change API Key</button>
+    <!-- Main View -->
+    <div id="main-view">
+      <!-- Goal Card -->
+      <div class="card">
+        <div class="card-title">
+          <span>Current Focus Goal</span>
+          <label class="switch" title="Toggle Monitoring">
+            <input id="monitoringToggle" type="checkbox" checked />
+            <span class="slider"></span>
+          </label>
+        </div>
+        <textarea
+          id="workPrompt"
+          placeholder="e.g. Building OAuth JWT authentication in Go and React"
+        ></textarea>
+        <div class="row" style="margin-top: 8px; justify-content: flex-end;">
+          <button id="savePromptBtn" class="btn-primary btn-sm">Update Goal</button>
+        </div>
+        <div id="goalStatus" class="status-msg"></div>
       </div>
-      <div id="status" class="status" aria-live="polite">
-        Waiting for input...
+
+      <!-- Enforcement Mode & Settings -->
+      <div class="card">
+        <div class="space-between">
+          <div>
+            <label for="enforcementSelect" style="margin-bottom: 2px;">Intervention Mode</label>
+            <span style="font-size: 11px; color: var(--muted);">How to handle detected distractions</span>
+          </div>
+          <select id="enforcementSelect" style="width: auto; padding: 6px 8px; font-size: 12px;">
+            <option value="grace">5s Grace Warning</option>
+            <option value="instant">Instant Close</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Custom Allowlist -->
+      <div class="card">
+        <div class="card-title">Allowed Domains</div>
+        <div class="row">
+          <input
+            id="newDomainInput"
+            type="text"
+            placeholder="e.g. youtube.com, twitch.tv"
+            style="flex: 1;"
+          />
+          <button id="addDomainBtn" class="btn-secondary btn-sm">Add</button>
+        </div>
+        <div id="allowedTags" class="tag-container">
+          <!-- Dynamically populated -->
+        </div>
+      </div>
+
+      <!-- Tab Graveyard -->
+      <div class="card">
+        <div class="card-title">
+          <span>Recently Closed Distractions</span>
+          <button id="clearGraveyardBtn" class="btn-secondary btn-sm" style="font-size: 10px; padding: 2px 6px;">Clear</button>
+        </div>
+        <div id="graveyardList" class="graveyard-list">
+          <div class="empty-state">No distractions closed yet. Keep focused! 🚀</div>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div class="footer">
+        <span>Powered by <strong>Jev</strong> (TypeSafe AI)</span>
+        <a id="changeKeyBtn" href="#">API Key Settings</a>
       </div>
     </div>
 
